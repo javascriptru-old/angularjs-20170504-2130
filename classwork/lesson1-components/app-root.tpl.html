@@ -1,0 +1,19 @@
+<button ng-click="$ctrl.toggleBlock()">show</button>
+
+
+<input type="text" ng-model="$ctrl.name">
+<input type="text" ng-model="$ctrl.name">
+<input type="text" ng-model="$ctrl.name">
+
+
+<div ng-if="$ctrl.show" >
+	<h1>Hello, {{$ctrl.name}}!</h1>
+</div>
+
+<ul>
+	<li ng-repeat="image in $ctrl.images">
+		<card image="image"></card>
+		<!--{{$index}} - <img ng-src="https://randomuser.me/api/{{image}}" alt="">-->
+	</li>
+</ul>
+
