@@ -1,0 +1,18 @@
+<div layout="row">
+    <div flex="50">
+        <md-list>
+            <md-list-item class="md-2-line" ng-repeat="user in vm.data" ng-click="vm.selectedUser=user;">
+                <img ng-src="{{user.picture.thumbnail}}" class="md-avatar"
+                     alt="{{user.name.first + ' ' + user.name.last}}" />
+                <div class="md-list-item-text">
+                    <h3>{{user.name.first + ' ' + user.name.last}}</h3>
+                    <p>{{user.email}}</p>
+                </div>
+            </md-list-item>
+        </md-list>
+    </div>
+    <md-divider></md-divider>
+    <div flex="50">
+        <user-card user="vm.selectedUser"></user-card>
+    </div>
+</div>
