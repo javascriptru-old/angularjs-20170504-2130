@@ -1,0 +1,11 @@
+{
+  "name": "lesson-01-user-card",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "node ./node_modules/http-server/bin/http-server"
+  },
+  "author": "",
+  "license": "ISC"
+}
