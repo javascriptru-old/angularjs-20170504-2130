@@ -1,0 +1,39 @@
+<div ng-class="{'panel':true, 'panel-info': !$ctrl.userinfo.selected, 'panel-success':$ctrl.userinfo.selected}"
+     ng-click="$ctrl.select({user: $ctrl.userinfo})">
+    <div class="panel-heading">
+        <div style="padding-right: 200px; display: inline-block">
+            <user-avatar url="$ctrl.userinfo.avatarUrl" ng-if="$ctrl.userinfo.avatarUrl !== null"></user-avatar>
+        </div>
+        <h3 class="panel-title" style="display: inline-block; text-align: center">
+            {{$ctrl.userinfo.fullName}}
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class=" col-md-9 col-lg-9 ">
+                <table class="table table-user-information">
+                    <tbody>
+
+                    <tr>
+                        <td>Дата рождения</td>
+                        <td>{{$ctrl.userinfo.birthdate}}</td>
+                    </tr>
+                    <tr>
+                        <td>Пол</td>
+                        <td>{{$ctrl.userinfo.gender}}</td>
+                    </tr>
+                    <tr>
+                        <td>Адрес</td>
+                        <td>{{$ctrl.userinfo.address}}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><a href="mailto:{{$ctrl.userinfo.email}}">{{$ctrl.userinfo.email}}</a></td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+    </div>
+</div>
