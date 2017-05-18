@@ -6,7 +6,7 @@
     </div>
 </div>
 <div ng-repeat="user in $ctrl.users" ng-if="$ctrl.check_photo(hide_users,!!user.picture)"
-     ng-click="$ctrl.select_card(this)" class="panel panel-info {{user.class_hover}}">
+     ng-click="$ctrl.select_card(user)" class="panel panel-info {{user.selected?'card_hover':''}}">
     <div class="panel-heading">
         <h3 class="panel-title">{{user.name}}</h3>
     </div>

@@ -9,8 +9,8 @@ app.component("userCard",{
     controller: function () {
         let self = this;
         this.users = [];
-        this.select_card = (a)=>{
-            a.user.class_hover = a.user.class_hover == "" ? "card_hover" : "";
+        this.select_card = (user)=>{
+            user.selected = !user.selected;
         }
         this.check_photo = (condion_cb, boolean_photo)=>{
             if(condion_cb){

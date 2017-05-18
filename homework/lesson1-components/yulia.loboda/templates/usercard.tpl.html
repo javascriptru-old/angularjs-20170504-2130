@@ -1,5 +1,5 @@
-<div class="panel panel-info" ng-repeat="user in users" ng-click="getSelected($index)"
-     ng-class="{ active:$index ==  selected }" ng-if="user.picture">
+<div class="panel panel-info" ng-repeat="user in $ctrl.users" ng-click="$ctrl.getSelected($index)"
+     ng-class="{ active:$index ==  $ctrl.selected }" ng-if="user.picture">
     <div class="panel-heading">
         <h3 class="panel-title">
             <span>{{ user.name.first | capitalize }}  </span>

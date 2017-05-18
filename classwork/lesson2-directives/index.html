@@ -1,0 +1,54 @@
+<html ng-app="myApp">
+<body>
+
+  <app-root></app-root>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+<script>
+	// !!! 1 - второй параметр обязателен при создании
+	let app = angular.module('myApp', []);
+	// !!! 2 - camelCase нотация только в именовании
+	app.component('appRoot', {
+      template: '<input ng-model="$ctrl.x"> <card x="1+1"></card>',
+	  controller: function() {
+		  this.alert = (message) => { alert(message); }
+
+	  }
+	});
+
+    //bindings: controller.property <= component attribute
+    //function (locals) {              return parentGet(scope, locals);            }
+
+	app.component('card', {
+		bindings: {
+           //image: '<image'
+           x: '&'
+		   // < - one way binding (1.5+)
+		   // = - two way
+		   // @ - value
+		   // & - callback
+		},
+		template: '<div style="border: solid 2px black"><input type=button ng-click="$ctrl.dosomething()"><input ng-model="$ctrl.y"></div>',
+		controller: function() {
+
+            // 1.5 // 1.6!
+            this.$onInit = function() {
+				//all params from binding are there
+                console.log(this.x({y : this.y}));
+			}
+			//this.$onChanges
+			//this.$postList
+			//this.$onDestroy
+
+			this.y = 0;
+			this.dosomething = () => {
+              console.log(this.x({y : this.y}));
+			}
+		}
+	})
+
+
+
+</script>
+</body>
+</html>

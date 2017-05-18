@@ -1,17 +1,23 @@
 let app = angular.module('myApp', []);
 
 
+//angular.bootstrap(document.body, ['myApp'], {});
+
+
 app.component('userCard', {
     templateUrl: './templates/usercard.tpl.html',
-    controller: function ($scope, $http) {
+    controller: function ($http) {
 
-        //ВОПРОС: Если не $scope а this совсем не видит items? 
-        $scope.users = {};
+        // $scope.$ctrl === this
+        // scope: {}
 
-        function getUsers() {
-            $http.get('https://randomuser.me/api?results=10').then(function success(response) {
+        //ВОПРОС: Если не $scope а this совсем не видит items?
+        this.users = {};
+
+        this.getUsers = () => {
+            $http.get('https://randomuser.me/api?results=10').then((response) => {
                 for(var key in response.data.results){
-                    $scope.users[key] = response.data.results[key];
+                    this.users[key] = response.data.results[key];
 
                 }
             }, function error(response) {
@@ -19,11 +25,11 @@ app.component('userCard', {
                 console.log("response: " + response.status);
             });
         };
-        getUsers();
+        this.getUsers();
 
-        $scope.selected = -1;
-        $scope.getSelected = function(index){
-            $scope.selected = index;
+        this.selected = -1;
+        this.getSelected = function(index){
+            this.selected = index;
         }
     }
 });
