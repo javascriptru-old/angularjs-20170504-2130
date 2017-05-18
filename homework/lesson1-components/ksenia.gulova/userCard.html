@@ -1,0 +1,24 @@
+<div class="panel panel-info" ng-class='{"backlight":$ctrl.showLight}' ng-click="$ctrl.toggleLight()">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{$ctrl.userCard.surName + ' ' + $ctrl.userCard.name}}</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class=" col-md-9 col-lg-9 ">
+                <table class="table table-user-information">
+                    <tbody>
+                    <tr><td>Дата рождения</td><td>{{$ctrl.userCard.birthday}}</td></tr>
+                    <tr><td>Пол</td><td>{{$ctrl.userCard.sex}}</td></tr>
+                    <tr><td>Адрес</td><td>{{$ctrl.userCard.address}}</td></tr>
+                    <tr><td>Email</td><td><a href="mailto:ivanov@mail.ru">{{$ctrl.userCard.email}}</a></td>
+                    <tr><td>Avatar</td><td><avatar image="$ctrl.userCard.avatar"></avatar></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+    </div>
+</div>
+
+<!--ng-class='{"myclass":tog==1}' ng-click='tog=1'-->
