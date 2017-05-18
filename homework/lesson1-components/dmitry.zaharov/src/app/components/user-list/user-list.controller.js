@@ -16,6 +16,7 @@
         ////////////////
 
         function onInit() {
+            vm.onlyPhoto = false;
             vm.data = userListService.getData();
             vm.selectedUser = vm.data[0];
         }

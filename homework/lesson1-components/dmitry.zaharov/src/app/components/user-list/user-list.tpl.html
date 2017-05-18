@@ -1,11 +1,21 @@
 <div layout="row">
     <div flex="50">
+        <md-toolbar layout="row" class="md-hue-3">
+            <div class="md-toolbar-tools">
+                <md-checkbox ng-model="vm.onlyPhoto">
+                    Показывать только с фото
+                </md-checkbox>
+            </div>
+        </md-toolbar>
         <md-list>
-            <md-list-item class="md-2-line" ng-repeat="user in vm.data" ng-click="vm.selectedUser=user;">
-                <img ng-src="{{user.picture.thumbnail}}" class="md-avatar"
-                     alt="{{user.name.first + ' ' + user.name.last}}" />
+            <md-list-item ng-if="!vm.onlyPhoto || (vm.onlyPhoto && user.picture.thumbnail)"
+                          ng-repeat="user in vm.data"
+                          ng-click="vm.selectedUser = user"
+                          ng-class="{'highlight': user === vm.selectedUser }"
+                          class="md-2-line">
+                <avatar src="user.picture.thumbnail" title="{{user.name}}"></avatar>
                 <div class="md-list-item-text">
-                    <h3>{{user.name.first + ' ' + user.name.last}}</h3>
+                    <h3>{{user.name}}</h3>
                     <p>{{user.email}}</p>
                 </div>
             </md-list-item>
