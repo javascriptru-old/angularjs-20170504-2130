@@ -53,11 +53,7 @@ angular.module('users', []).
         bindings: {
             userinfo: '<',
             select: '&'
-        },
-        controller: function(){
-            //this.selected = true;
         }
-
     }
 ).component('userCardList',
     {
@@ -82,9 +78,6 @@ angular.module('users', []).
         template: `<img ng-src="{{$ctrl.url}}">`,
         bindings: {
             url: '<'
-        },
-        controller: function(){
-
         }
     }
 );
