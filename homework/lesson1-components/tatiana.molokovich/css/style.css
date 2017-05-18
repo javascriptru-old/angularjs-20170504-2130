@@ -1,0 +1,26 @@
+.panel .table{
+    margin-bottom: 0;
+}
+.list-item{
+    display: inline-block;
+    vertical-align: top;
+    width: 50%;
+    padding: 0 15px;
+    margin-bottom: 20px;
+}
+.userphoto{
+    display: inline-block;
+    vertical-align: top;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+.userphoto img{
+    display: block;
+    width: 100%;
+}
+.panel-title{
+    display: inline-block;
+    vertical-align: top;
+}
