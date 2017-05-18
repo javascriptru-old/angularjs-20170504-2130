@@ -1,0 +1,32 @@
+<div class="well">
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="hide_users">Hide without photo
+        </label>
+    </div>
+</div>
+<div ng-repeat="user in $ctrl.users" ng-if="$ctrl.check_photo(hide_users,!!user.picture)"
+     ng-click="$ctrl.select_card(this)" class="panel panel-info {{user.class_hover}}">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{user.name}}</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-9 col-md-9 col-lg-9 ">
+                <table class="table table-user-information">
+                    <tbody>
+                    <tr><td>Дата рождения</td><td>{{user.birthday}}</td></tr>
+                    <tr><td>Пол</td><td>{{user.male}}</td></tr>
+                    <tr><td>Адрес</td><td>{{user.adress}}</td></tr>
+                    <tr><td>Email</td><td><a href="mailto:{{user.email}}">{{user.email}}</a></td>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-3 col-md-3 col-lg-3 ">
+                <avatar-card picture="user.picture"></avatar-card>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+    </div>
+</div>
