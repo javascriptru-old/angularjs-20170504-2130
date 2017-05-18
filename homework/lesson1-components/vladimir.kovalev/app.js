@@ -1,6 +1,4 @@
 
-import angular from 'angular';
-
 let app = angular.module('ngApp', []);
 
 function randomInteger(min, max) {
@@ -10,7 +8,7 @@ function randomInteger(min, max) {
 }
 
 app.component('appRoot', {
-    template: require("./app-root.tpl.html"),
+    templateUrl: "app-root.tpl.html",
     controller: function($http){
         this.users = [];
         this.onlyPhoto = false;
@@ -35,7 +33,7 @@ app.component('appRoot', {
 });
 
 app.component('userCard', {
-    template: require("./user-card.tpl.html"),
+    templateUrl: "user-card.tpl.html",
     bindings: {
         user: '<',
         selected: '='
@@ -48,7 +46,7 @@ app.component('userCard', {
 });
 
 app.component('avatar', {
-    template: require("./avatar.tpl.html"),
+    templateUrl: "avatar.tpl.html",
     bindings: {
         picture: '<'
     },
