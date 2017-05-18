@@ -1,0 +1,8 @@
+<ul class="user-list" >
+    <li ng-repeat="user in $ctrl.users" ng-click="$ctrl.onClick(user)" ng-class="{checked: $ctrl.user.checked,
+    unchecked: !$ctrl.user.checked}">
+        <img ng-src="https://randomuser.me/api/{{user.image}}">
+        <span>{{user.name}}</span>
+    </li>
+</ul>
+<user-card ng-bind="user"></user-card>
