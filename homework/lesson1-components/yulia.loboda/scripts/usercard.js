@@ -37,7 +37,7 @@ app.component('userCard', {
 
 app.component('avatar', {
     bindings: {
-        image: '='
+        image: '>'
     },
     template: '<img ng-src="{{$ctrl.image}}" alt="">',
     controller: function () {
