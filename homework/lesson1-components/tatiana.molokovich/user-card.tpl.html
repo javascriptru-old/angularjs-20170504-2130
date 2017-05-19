@@ -1,0 +1,32 @@
+<div class="panel panel-info" ng-click="$ctrl.setBackground()" ng-style="$ctrl.background != '' && {'background':$ctrl.background}">
+  <div class="panel-heading">
+    <user-avatar avatar="$ctrl.user.photo"></user-avatar>
+    <h3 class="panel-title">{{$ctrl.user.name}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <table class="table table-user-information">
+          <tbody>
+            <tr ng-if="$ctrl.user.birthday">
+              <td>Дата рождения</td>
+              <td>{{$ctrl.user.birthday}}</td>
+            </tr>
+            <tr ng-if="$ctrl.user.gender">
+              <td>Пол</td>
+              <td>{{$ctrl.user.gender}}</td>
+            </tr>
+            <tr ng-ig="$ctrl.user.address.street">
+              <td>Адрес</td>
+              <td>{{$ctrl.user.address.street}}, {{$ctrl.user.address.home}}</td>
+            </tr>
+            <tr ng-if="$ctrl.user.email">
+              <td>Email</td>
+              <td><a href="mailto:{{$ctrl.user.email}}">{{$ctrl.user.email}}</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

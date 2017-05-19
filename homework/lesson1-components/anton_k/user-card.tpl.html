@@ -1,0 +1,24 @@
+<div ng-if="true || $ctrl.user.avatar !== undefined && $ctrl.onlyWithPhoto" >
+    <div class="panel panel-info {{$ctrl.getSelected()}}">
+        <div ng-click="$ctrl.selectUser()" class="panel-heading">
+            <h3 class="panel-title">{{$ctrl.user.name}}</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class=" col-md-9 col-lg-9 ">
+                    <table class="table table-user-information">
+                        <tbody>
+                        <tr><td><avatar image="$ctrl.user.avatar"></avatar></td></tr>
+                        <tr><td>{{$ctrl.user.born}}</td><td>1976-10-10</td></tr>
+                        <tr><td>Пол</td><td>{{$ctrl.user.sex}}</td></tr>
+                        <tr><td>Адрес</td><td>{{$ctrl.user.address}}</td></tr>
+                        <tr><td>Email</td><td><a href="mailto:{{$ctrl.user.email}}">{{$ctrl.user.email}}</a></td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+        </div>
+    </div>
+</div>

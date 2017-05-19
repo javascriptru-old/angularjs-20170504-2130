@@ -1,0 +1,11 @@
+<div class="container">
+
+    <input type="checkbox" ng-model="$ctrl.onlyWithPhoto">Показывать только с фото</input>
+
+    <div class="row">
+        <div class="col-md-6" ng-repeat="user in $ctrl.users">
+            <user-card user="user"
+            photo-needed="$ctrl.onlyWithPhoto"></user-card>
+        </div>
+    </div>
+</div>
