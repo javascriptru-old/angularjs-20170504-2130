@@ -1,0 +1,25 @@
+ul{
+    display: inline-block;
+}
+
+.user-list li{
+    list-style: none;
+    border: 1px solid gray;
+    margin: 0;
+    width: 300px;
+}
+
+.checked{
+    background-color: gray;
+    color: white;
+}
+
+.unchecked{
+    background-color: white;
+    color: black;
+}
+
+.user-card{
+    display: inline-block;
+    float: right;
+}

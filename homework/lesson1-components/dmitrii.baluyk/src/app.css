@@ -1,0 +1,7 @@
+body{
+    padding-top: 70px;
+    padding-bottom: 30px;
+}
+.card_hover{
+    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+}

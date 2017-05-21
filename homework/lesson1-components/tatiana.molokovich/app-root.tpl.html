@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="list">
+    <div class="list-item" ng-repeat="item in $ctrl.userList" ng-if="!($ctrl.onlyphoto) || item.photo">
+      <user-card user="item" onlyphoto="$ctrl.onlyphoto"></user-card>
+    </div>
+  </div>
+
+  <label>
+    <input type="checkbox" ng-model="$ctrl.onlyphoto">
+    Показывать только с фото
+  </label>
+</div>
