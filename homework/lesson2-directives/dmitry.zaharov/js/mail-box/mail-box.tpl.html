@@ -1,0 +1,12 @@
+<md-content>
+    <div class="md-padding">
+        <form name="mb.form">
+            <md-input-container class="md-block">
+                <label>Выводить по</label>
+                <input type="number" name="limit" min="1" ng-model="mb.limit">
+            </md-input-container>
+        </form>
+    </div>
+    <md-divider></md-divider>
+    <mail-list mails="mb.mails" limit="mb.limit"></mail-list>
+</md-content>

@@ -1,0 +1,4 @@
+<md-list>
+    <mail-item ng-repeat="mail in ml.mails | limitTo: ml.limit"
+               mail-obj="mail" delete-fn="ml.deleteMail(mailId)"></mail-item>
+</md-list>
