@@ -1,0 +1,71 @@
+<html ng-app="myApp">
+<body>
+
+  <app-root></app-root>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script>
+	// !!! 1 - второй параметр обязателен при создании
+	let app = angular.module('myApp', []);
+	// !!! 2 - camelCase нотация только в именовании
+	app.component('appRoot', {
+      templateUrl: './app-root.tpl.html',
+	  controller: function() {
+         this.name = 'John';
+		 this.toggleBlock = () => {
+           this.show = !this.show;
+		 }
+		 this.itemList = [1,2,3,4,5];
+
+		 this.images = [
+              'portraits/thumb/men/1.jpg',
+              'portraits/thumb/men/3.jpg',
+              'portraits/thumb/men/5.jpg',
+              'portraits/thumb/men/6.jpg',
+              'portraits/thumb/men/78.jpg'
+        ];
+	  }
+	});
+
+	app.component('card', {
+		bindings: {
+           image: '<'
+		   // < - one way binding (1.5+)
+		   // = - two way
+		   // @ - value
+		   // & - callback
+		},
+		template: '<img ng-src="https://randomuser.me/api/{{$ctrl.image}}" alt="">',
+		controller: function() {
+
+		}
+	})
+
+	// app.directive('appRoot', function() {
+    //   return {
+	//	  scope: {},  // scope: true // scope: false
+	// 	  templateUrl: './app-root.tpl.html',
+	// 	  controller: function() {
+    //         this.name = 'John';
+	//       },
+	// 	  controllerAs: '$ctrl'
+	//   };
+	// });
+
+
+	/*
+	  - ng-if (ng-show/ng-hide)
+	  - ng-click (и другие события)
+	  - ng-repeat
+	  - ng-src / ng-href
+	  - ng-class / ng-style
+	  - ng-bind / ng-bind-html
+	  - ng-model
+
+	  - ngController - не использовать
+	*/
+
+
+</script>
+</body>
+</html>
