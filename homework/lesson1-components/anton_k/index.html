@@ -1,0 +1,84 @@
+<html ng-app="myApp">
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .selected {
+      background-color: lightpink;
+    }
+  </style>
+</head>
+<body>
+
+  <app-root></app-root>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script>
+  console.log('hello');
+	let app = angular.module('myApp', []);
+
+	app.component('appRoot', {
+      templateUrl: './app-root.tpl.html',
+	  controller: function() {
+          this.onlyWithPhoto = true;
+          this.users = [
+              {
+                  name: 'Ivan Smirnov',
+                  address: 'pl.Mira, 5',
+                  sex: 'male',
+                  born: '1980-12-01',
+                  email: 'ivan.smirnov@gmail.com',
+                  avatar: 'https://randomuser.me/api/portraits/med/men/83.jpg'
+              },
+              {
+                  name:'Piotr Kruglov',
+                  address: 'Karlsplatz, 2',
+                  sex: 'male',
+                  born: '1985-10-20',
+                  email: 'piotr.kruglov@gmail.com'
+              }];
+
+           this.isShown = (user, onlyWithPhoto) => {
+               if(onlyWithPhoto && !user.avatar) {
+                   return  false;
+               }
+              return  true;
+           }
+	  }
+
+	});
+
+	app.component('userCard', {
+        bindings: {
+            user: '<user',
+            onlyWithPhoto: '<onlyWithPhoto'
+        },
+		templateUrl: './user-card.tpl.html',
+		controller: function() {
+            this.state = '';
+            this.selectUser = () => {
+                console.log('onlyWithPhoto=' + this.onlyWithPhoto);
+                this.state = this.state === 'selected' ? '' : 'selected';
+            };
+            this.getSelected = () => {
+                return this.state;
+            };
+		}
+	});
+
+  app.component('avatar', {
+      bindings: {
+          image: '<image'
+      },
+      templateUrl: './avatar.tpl.html',
+      controller: function() {
+          this.say = () => {
+              console.log('hey!');
+          };
+      }
+  });
+
+
+
+</script>
+</body>
+</html>

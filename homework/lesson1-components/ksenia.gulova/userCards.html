@@ -1,0 +1,9 @@
+<div class="container">
+    <label>Show with avatar only: </label><input type="checkbox" ng-model="$ctrl.withAvatar">
+    <div class="row">
+        <div class="col-md-6" ng-repeat="user in $ctrl.userList">
+            <user-card card="user" ng-if="$ctrl.userWithAvatar(user.avatar)"></user-card>
+        </div>
+    </div>
+</div>
+

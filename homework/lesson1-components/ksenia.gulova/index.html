@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="userCards">
+<head>
+    <meta charset="UTF-8">
+    <title>Карточки пользователей</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+
+<div class="cards">
+    <user-cards></user-cards>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+<script>
+    'use strict'
+    var app = angular.module('userCards', []);
+    app.component('userCards',{
+        templateUrl: 'userCards.html',
+        controller: function(){
+            this.userList = [{
+                surName: 'Иванов',
+                name: 'Иван',
+                birthday: '1976-10-10',
+                sex: 'мужской',
+                address: 'ул. Звенигороская, 47б',
+                email: 'ivanov@mail.ru',
+                avatar: 'https://lh6.googleusercontent.com/-oOM7XQwuxCg/AAAAAAAAAAI/AAAAAAAAABM/KxLom5ZsPho/photo.jpg'
+            },{
+                surName: 'Иванова',
+                name: 'Оля',
+                birthday: '1990-08-11',
+                sex: 'женский',
+                address: 'Виру 56-34',
+                email: 'ivanova@mail.ru',
+                avatar: 'https://cdn4.iconfinder.com/data/icons/avatar-and-user/78/Avatar_person_user_character_man_woman_human-01-512.png'
+            },
+            {
+                surName: 'Петрова',
+                name: 'Анна',
+                birthday: '1993-05-03',
+                sex: 'женский',
+                address: 'Кивила 7-23',
+                email: 'petrova@mail.ru',
+                avatar: ''
+            }
+        ],
+                this.withAvatar = false,
+                this.userWithAvatar = function(avatar) {
+                    if(this.withAvatar && !avatar){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }
+        }
+    });
+
+    app.component('userCard',{
+        bindings:{
+            userCard : '<card'
+        },
+        templateUrl: 'userCard.html',
+        controller: function(){
+            this.toggleLight = function() {
+                this.showLight = !this.showLight;
+            }
+        }
+    });
+
+    app.component('avatar', {
+        bindings: {
+            avatar:'<image'
+        },
+        template : '<img src="{{$ctrl.avatar}}" style="width:50px;height:50px;">'
+    })
+</script>
+
+
+</body>
+</html>
