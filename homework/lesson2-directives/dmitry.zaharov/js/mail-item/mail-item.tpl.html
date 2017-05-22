@@ -1,0 +1,11 @@
+<md-list-item class="md-3-line hoverable">
+    <img ng-src="{{mi.mailObj.avatar}}" class="md-avatar" alt="{{mi.mailObj.name}}" />
+    <div class="md-list-item-text" layout="column">
+        <h3>{{mi.mailObj.name}}</h3>
+        <h4>{{mi.mailObj.subject}}</h4>
+        <p md-truncate>{{mi.mailObj.content}}</p>
+    </div>
+    <md-icon class="md-secondary md-dark" aria-label="Delete forever"
+             ng-click="mi.deleteFn({mailId: mi.mailObj.id})"
+             md-svg-src="img/ic_delete_forever_black_24px.svg/"></md-icon>
+</md-list-item>
