@@ -1,0 +1,5 @@
+<div class="row-fluid">
+    <div class="col-md-8">
+        <mail-letter ng-repeat="letter in $ctrl.letters | limitTo:$ctrl.display" letter="letter" on-delete-clicked="$ctrl.deleteLetter(letter)"></mail-letter>
+    </div>
+</div>

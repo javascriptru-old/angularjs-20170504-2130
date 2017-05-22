@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User-list</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body ng-app="userCards">
+
+<main></main>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+<script>
+    'use strict';
+    var app = angular.module('userCards', []);
+
+    app.component('main', {
+        templateUrl: 'main.html',
+        controller: function () {
+
+        }
+    });
+
+    app.component('mailBox', {
+        bindings: {
+            display: '@'
+        },
+        templateUrl: 'mail-box.html',
+        controller: function ($scope) {
+            this.letters = [
+                {
+                    id: 1,
+                    title: "Letter #1",
+                    content: "text"
+                }, {
+                    id: 2,
+                    title: "Letter #2",
+                    content: "text text"
+                }];
+
+            this.deleteLetter = (letter) => {
+                this.letters = this.letters.filter(function (el) {
+                    return el.id !== letter.id
+                });
+            };
+
+            this.addLetter = () => {
+                let randomId = Math.floor(Math.random() * 99 + 1);
+                this.letters.push({
+                    id: randomId,
+                    content: "Random content - " + randomId,
+                    title: "Random title #" + randomId
+                });
+                $scope.$apply();
+
+                clearTimeout(this.timer);
+                this.timer = generateTimeout(this.addLetter);
+            };
+
+            this.timer = generateTimeout(this.addLetter);
+        }
+    });
+
+    app.component('mailLetter', {
+        bindings: {
+            letter: '<',
+            onDeleteClicked: "&"
+        },
+        templateUrl: 'mail-letter.html',
+        controller: function () {
+            this.$onInit = () => {
+                this.timeLived = 0;
+                this.interval = setInterval(() => {
+                    this.timeLived++;
+                }, 1000);
+            };
+
+            this.$onDestroy = () => {
+                clearInterval(this.interval);
+                console.log(this.letter.title, this.timeLived);
+            }
+        }
+    });
+
+
+
+    function generateTimeout(handler) {
+        let randomInterval = Math.floor(Math.random() * (8 - 3)) + 3;
+        return setTimeout(handler, randomInterval * 1000);
+    }
+</script>
+</body>
+</html>
