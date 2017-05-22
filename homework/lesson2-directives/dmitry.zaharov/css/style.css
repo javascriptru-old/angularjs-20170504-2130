@@ -1,0 +1,7 @@
+.md-dark>svg {
+    fill: rgba(0, 0, 0, 0.54);
+}
+
+.hoverable:hover {
+    background-color: rgba(158, 158, 158, 0.2);
+}
