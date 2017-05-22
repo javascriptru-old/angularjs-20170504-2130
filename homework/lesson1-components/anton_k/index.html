@@ -102,13 +102,10 @@
 		templateUrl: './user-card.tpl.html',
 		controller: function($log) {
             this.state = '';
-<<<<<<< HEAD
+
             this.selectCard = () => {
                 $log.info('onlyWithPhoto=' + this.onlyWithPhoto);
-=======
-            this.selectUser = () => {
-                console.log('onlyWithPhoto=' + this.onlyWithPhoto);
->>>>>>> 008b2d33613e08d8ff6fa7b765ad53a2d788a711
+
                 this.state = this.state === 'selected' ? '' : 'selected';
             };
             this.getSelected = () => {

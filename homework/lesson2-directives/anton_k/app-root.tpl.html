@@ -8,11 +8,16 @@
         </ul>
 
     </div>
-    
+
+
+    <div class="row" ng-if="$ctrl.isDisplayMode($ctrl.MODES.LETTERS)" >
+        <letter-list letters-number="$ctrl.LETTERS_NUMBER"></letter-list>
+    </div>
 
     <div ng-if="$ctrl.isDisplayMode($ctrl.MODES.CONTACTS)" class="row">
         <user-list mode="$ctrl.mode"></user-list>
     </div>
+
 
 </div>
 
