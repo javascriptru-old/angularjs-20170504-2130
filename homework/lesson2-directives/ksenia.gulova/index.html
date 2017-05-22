@@ -72,7 +72,7 @@
             }
             this.$onDestroy = function(){
                 var lifetime = (new Date() - this.startDate) / 1000;
-                alert('The letter lifetime - '+ lifetime + ' seconds');
+                console.log('The letter lifetime - '+ lifetime + ' seconds');
             }
         }
     });
