@@ -20,16 +20,20 @@
     });
 
   app.constant('CONFIG', {
-      VISIBLE_LETTERS: 10
+      LETTERS_NUMBER: 4
   });
 
 	app.component('appRoot', {
       templateUrl: './app-root.tpl.html',
-	  controller: function($log, MODES) {
+	  controller: function($log, MODES, CONFIG) {
+          // initializing parameters
           this.MODES = MODES;
+          this.LETTERS_NUMBER = CONFIG.LETTERS_NUMBER;
+
           this.mode = this.MODES.LETTERS;
           this.setDisplayMode = (mode) => {
               this.mode = mode;
+              $log.info('Display mode set to', mode);
           };
           this.isDisplayMode = (mode) => {
               return mode === this.mode;
@@ -39,10 +43,33 @@
 
   app.component('letterList', {
       bindings: {
-          mode: '<'
+          lettersNumber: '@'
       },
       templateUrl: './letter-list.tpl.html',
-      controller: function() {
+      controller: function($log, $timeout) {
+
+          this.removeLetter = (letter) => {
+            this.letters.splice(this.letters.indexOf(letter), 1);
+          };
+
+          this.addLetter = () => {
+              this.letters.push({
+                  from: 'somebody@somewhere.com',
+                  to: 'petrov@gmail.com',
+                  subject: 'No subject'
+              });
+          };
+
+          this.receiveLetter = () => {
+              $timeout( () => {
+                  $log.info('New letter is comming');
+                  this.addLetter();
+                  this.receiveLetter();
+              }, (Math.random()*5+3)*1000 );
+
+          };
+
+          this.receiveLetter();
 
           this.letters = [
               {
@@ -58,6 +85,26 @@
       }
   });
 
+  app.component('letter', {
+      bindings: {
+          letter: '<',
+          remove: '&'
+      },
+      templateUrl: './letter.tpl.html',
+      controller: function($log) {
+        this.removeLetter = () => {
+            $log.info('Removing letter with subject', this.letter.subject);
+            this.remove(this.letter);
+          };
+          this.$onInit = function() {
+              this.letter.timestamp = new Date();
+          };
+          this.$onDestroy = function() {
+              $log.info('Letter\'s life time is', (new Date() - this.letter.timestamp) / 1000, 'seconds');
+          };
+
+      }
+  });
 
   app.component('userList', {
         bindings: {

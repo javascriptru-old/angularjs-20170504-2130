@@ -1,0 +1,8 @@
+<div class="row">
+    {{'Писем показано ' + ($ctrl.lettersNumber < $ctrl.letters.length ? $ctrl.lettersNumber : $ctrl.letters.length) + ' из ' + $ctrl.letters.length}}
+</div>
+<div class="row">
+    <div class="col-md-6" ng-repeat="letter in $ctrl.letters">
+        <letter ng-if="$ctrl.letters.indexOf(letter) < $ctrl.lettersNumber" letter="letter" remove="$ctrl.removeLetter(letter)"></letter>
+    </div>
+</div>
