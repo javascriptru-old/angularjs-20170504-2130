@@ -3,6 +3,6 @@
 </div>
 <div class="row">
     <div class="col-md-6" ng-repeat="letter in $ctrl.letters">
-        <letter ng-if="$ctrl.letters.indexOf(letter) < $ctrl.lettersNumber" letter="letter" remove="$ctrl.removeLetter(letter)"></letter>
+        <letter letter="letter" remove="$ctrl.removeLetter(letter)"></letter>
     </div>
 </div>

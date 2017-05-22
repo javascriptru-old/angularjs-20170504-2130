@@ -63,10 +63,12 @@
     app.component('letter',{
         bindings:{
             letter : '<content',
-            onDelete: '&'
+            onDelete: '&',
+            someValue: '@'
         },
         templateUrl: 'letter.html',
         controller: function(){
+            //1.6
             this.$onInit = function(){
                 this.startDate = new Date();
             }
@@ -76,6 +78,22 @@
             }
         }
     });
+
+
+    function letter(letter, onEdit, someValue){
+       onEdit(newText);
+    }
+    /*
+    //let someletter = {}, x = 5;
+    //
+    //letter(someletter, () => {
+       x;
+    }, 'text string')
+
+    <child someevent="$ctrl.dosomething()">
+
+    */
+
 </script>
 </body>
 </html>
