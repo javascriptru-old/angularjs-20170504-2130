@@ -11,17 +11,16 @@ let app = angular.module("mailApp",[]);
 
 app.component("mailBox",{
     templateUrl: './mailbox.tmpl.html',
-    controller: function($timeout){
+    controller: function($timeout, $http){
         this.mails = mails.mails;
-        this.limit_mails = 50;
+        this.limit_mails = 10;
         this.mails.forEach((a)=>{
             a['id'] = randomId();
             a['time_start'] = Date.now();
         });
 
         this.delete_mail = (id) => {
-            //_.remove(this.mails,{"id" : id})
-            this.mails.splice(0,1)
+            _.remove(this.mails,{"id" : id});
         }
 
         this.add_mail = (obj) =>{
@@ -31,13 +30,13 @@ app.component("mailBox",{
         this.funny_time = ()=> {
             let p1 = new Promise((res,rej)=>{
                 $timeout(()=>{
-                    let obj = mails.mails[randomInteger(0,5)];
-                    obj['$$hashKey'] = 0;
-                    obj['id'] = randomId();
-                    obj['time_start'] = Date.now();
-                    console.log(obj);
-                    this.add_mail(obj);
-                    res();
+                    $http.get('./mails.json').then((data)=>{
+                        let obj = data.data.mails[randomInteger(0,4)];
+                        obj['id'] = randomId();
+                        obj['time_start'] = Date.now();
+                        this.add_mail(obj);
+                        res();
+                    });
                 },randomInteger(3,8)*1000)
             })
 
@@ -62,10 +61,16 @@ app.component("userMail",{
             toastr.success('Time life mail: ' + time_life + 'secs')
         };
 
-        this.delete = (id) => {
+        this.delete = (id,event) => {
+            /*ВОПРОС АЛЯРМ!
+            * Пока я не добавил event.preventDefault(), событие от клика всплывало куда то и обновляла страницу.
+            * Причем! страница обновлялась только тогда, когда я удаляю тот же элемент на котором вызывалось это событие.
+            * Например: допустим я вызываю удаления первого элемента в массиве, на 2 элементе странице(то бишь на другом элементе масива) страница не обновляеться,
+            * как только я вызываю удаление первого элемента, на 1 элементе страницы, то она обновляеться.
+            * Вопрос: Что это ? Как с этим бороться ?*/
+            event.preventDefault();
             this.deleteMail({id: id});
         };
-
     }
 });
 
