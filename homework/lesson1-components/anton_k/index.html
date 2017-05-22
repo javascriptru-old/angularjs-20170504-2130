@@ -13,47 +13,112 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script>
-  console.log('hello');
-	let app = angular.module('myApp', []);
+  let app = angular.module('myApp', []);
+  app.constant('MODES', {
+      CONTACTS: 'Contacts',
+      LETTERS:  'Letters'
+    });
+
+  app.constant('CONFIG', {
+      VISIBLE_LETTERS: 10
+  });
 
 	app.component('appRoot', {
       templateUrl: './app-root.tpl.html',
-	  controller: function() {
-          this.onlyWithPhoto = true;
-          this.users = [
+	  controller: function($log, MODES) {
+          this.MODES = MODES;
+          this.mode = this.MODES.LETTERS;
+          this.setDisplayMode = (mode) => {
+              this.mode = mode;
+          };
+          this.isDisplayMode = (mode) => {
+              return mode === this.mode;
+          }
+	  }
+	});
+
+  app.component('letterList', {
+      bindings: {
+          mode: '<'
+      },
+      templateUrl: './letter-list.tpl.html',
+      controller: function() {
+
+          this.letters = [
               {
-                  name: 'Ivan Smirnov',
-                  address: 'pl.Mira, 5',
-                  sex: 'male',
-                  born: '1980-12-01',
-                  email: 'ivan.smirnov@gmail.com',
-                  avatar: 'https://randomuser.me/api/portraits/med/men/83.jpg'
+                  from: 'smirnov@mail.ru',
+                  to: 'petrov@gmail.com',
+                  subject: 'hello from Smirnov'
               },
               {
-                  name:'Piotr Kruglov',
-                  address: 'Karlsplatz, 2',
-                  sex: 'male',
-                  born: '1985-10-20',
-                  email: 'piotr.kruglov@gmail.com'
+                  from: 'petrov@gmail.com',
+                  to: 'ivanova@yandex.ru',
+                  subject: 'Greetings to Ivanova'
               }];
-	  }
+      }
+  });
 
-	});
+
+
+  app.component('userList', {
+        bindings: {
+            mode: '<'
+        },
+        templateUrl: './user-list.tpl.html',
+        controller: function() {
+
+            this.onlyWithPhoto = false;
+
+            this.shouldShowUser = (user) => {
+                if(this.onlyWithPhoto && user.avatar === undefined) {
+                    return false;
+                }
+                return true;
+            };
+
+            this.users = [
+                {
+                    name: 'Ivan Smirnov',
+                    address: 'pl.Mira, 5',
+                    sex: 'male',
+                    born: '1980-12-01',
+                    email: 'ivan.smirnov@gmail.com',
+                    avatar: 'https://randomuser.me/api/portraits/med/men/83.jpg'
+                },
+                {
+                    name:'Piotr Kruglov',
+                    address: 'Karlsplatz, 2',
+                    sex: 'male',
+                    born: '1985-10-20',
+                    email: 'piotr.kruglov@gmail.com'
+                }];
+        }
+    });
 
 	app.component('userCard', {
         bindings: {
             user: '<user',
-            onlyWithPhoto: '<onlyWithPhoto'
+            photoNeeded: '<photoNeeded'
         },
 		templateUrl: './user-card.tpl.html',
-		controller: function() {
+		controller: function($log) {
             this.state = '';
-            this.click = () => {
-                console.log('onlyWithPhoto=' + this.onlyWithPhoto);
+            this.selectCard = () => {
+                $log.info('onlyWithPhoto=' + this.onlyWithPhoto);
                 this.state = this.state === 'selected' ? '' : 'selected';
             };
             this.getSelected = () => {
                 return this.state;
+            };
+            this.isVisible = () => {
+
+                return true;
+
+                $log.info('photoNeeded:', this.photoNeeded, 'Avatar:', this.user.avatar);
+                if(this.photoNeeded && this.user.avatar === undefined) {
+                    return false;
+                }
+                return true;
             };
 		}
 	});
@@ -63,9 +128,9 @@
           image: '<image'
       },
       templateUrl: './avatar.tpl.html',
-      controller: function() {
+      controller: function($log) {
           this.say = () => {
-              console.log('hey!');
+              $log.info('hey!');
           };
       }
   });
