@@ -1,0 +1,12 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <input type="checkbox" ng-model="$ctrl.showWithPhotosOnly">
+        <label>Показывать только пользователей с фото</label>
+    </div>
+    <div class="panel-body">
+        <div ng-repeat="user in $ctrl.users | filter : $ctrl.userFilter">
+            <user-card userinfo="user" select="$ctrl.select(user)"></user-card>
+        </div>
+    </div>
+</div>
+

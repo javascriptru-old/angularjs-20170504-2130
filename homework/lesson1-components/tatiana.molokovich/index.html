@@ -1,0 +1,109 @@
+<html ng-app="myApp">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<body>
+
+<app-root></app-root>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script>
+    let app = angular.module('myApp', []);
+
+    app.component('appRoot', {
+        templateUrl: './app-root.tpl.html',
+        controller: function(){
+
+            this.userList = [{
+                name: 'Лихачёв Виталий Владимирович',
+                photo: './img/1.jpg',
+                birthday: '10.3.1970',
+                gender: 'мужской',
+                address: {
+                    street: 'ул. Ленина',
+                    home: '376'
+                },
+                email: 'tinysun98@example.com'
+            }, {
+                name: 'Гришина Евгения Никитична',
+                photo: './img/2.jpg',
+                birthday: '10.06.1981',
+                gender: 'женский',
+                address: {
+                    street: 'ул. Пушкина',
+                    home: '22'
+                },
+                email: ''
+            }, {
+                name: 'Фадеева Наталья Альбертовна',
+                photo: './img/3.jpg',
+                birthday: '24.11.1990',
+                gender: 'женский',
+                address: {
+                    street: 'ул. Тельмана',
+                    home: '135'
+                },
+                email: 'awesomesun87@example.com'
+            }, {
+                name: 'Громова Галина Евгеньевна',
+                photo: '',
+                birthday: '30.12.1985',
+                gender: 'женский',
+                address: {
+                    street: 'ул. Маяковского',
+                    home: '21'
+                },
+                email: 'browndog47@example.com'
+            }, {
+                name: 'Колобов Максим Владиславович',
+                photo: './img/4.jpg',
+                birthday: '08.04.2001',
+                gender: 'мужской',
+                address: {
+                    street: 'ул. Тухачевского',
+                    home: '26'
+                },
+                email: 'brownorange42@example.com'
+            }, {
+                name: 'Кондратьев Игорь Валентинович',
+                photo: '',
+                birthday: '13.05.1984',
+                gender: 'мужской',
+                address: {
+                    street: 'ул. Морозова',
+                    home: '11'
+                },
+                email: 'beautifulorange81@example.com'
+            }]
+
+        }
+    });
+
+
+    app.component('userCard', {
+        bindings: {
+            user: '<user',
+            onlyphoto: '<'
+        },
+        templateUrl: './user-card.tpl.html',
+        controller: function(){
+            this.selectBackground = 'lightgray';
+
+            this.setBackground = () => {
+                this.background = this.selectBackground;
+            }
+        }
+    });
+
+    app.component('userAvatar', {
+        bindings: {
+            photo: '<avatar'
+        },
+        templateUrl: './user-avatar.tpl.html',
+        controller: function(){}
+    });
+
+
+</script>
+
+</body>
+</html>

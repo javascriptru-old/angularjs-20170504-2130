@@ -1,0 +1,23 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="$ctrl.onlyPhoto"> Отображать только с фото
+                        </label>
+                    </div>
+                </div>
+                <user-card
+                        user="user"
+                        selected="$ctrl.selected"
+                        ng-repeat="user in $ctrl.users"
+                        ng-if="!$ctrl.onlyPhoto || (user.picture !== null)"
+                        class="col-lg-6 col-md-12  col-sm-12 col-xs-12">
+                </user-card>
+            </div>
+        </div>
+    </div>
+</div>
+
