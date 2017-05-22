@@ -22,7 +22,7 @@
         '<input ng-model="$ctrl.quantity" type="number"/></div>'+
         '<mailbox limit="{{$ctrl.quantity}}"></mailbox>',
         controller: function () {
-            this.quantity = 2;
+            this.quantity = 3;
         }
     });
 
@@ -72,7 +72,7 @@
             }
             this.$onDestroy = function(){
                 var lifetime = (new Date() - this.startDate) / 1000;
-                alert('The letter lifetime - '+ lifetime + ' seconds');
+                console.log('The letter lifetime - '+ lifetime + ' seconds');
             }
         }
     });
