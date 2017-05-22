@@ -1,0 +1,9 @@
+<section class="mail">
+    <div class="container">
+        <a ng-click="$ctrl.setMailCount(1)">1 письмо</a> <a ng-click="$ctrl.setMailCount(2)">2 письма</a> <a ng-click="$ctrl.setMailCount(3)">3 письма</a>
+        или введите количество писем
+        <input type="text" ng-model="$ctrl.mailcount" placeholder="Количество писем..." aria-label="" />
+        
+        <mailbox maillist="$ctrl.maillist" mailcount="$ctrl.mailcount"></mailbox>
+    </div>
+</section>
