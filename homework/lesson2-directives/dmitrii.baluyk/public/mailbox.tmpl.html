@@ -1,0 +1,10 @@
+<h1 class="content-title">Inbox</h1>
+<div class="form-group">
+    <label for="limit_mails">Limit mail:</label>
+    <input id="limit_mails" type="text" ng-model="$ctrl.limit_mails" style="width: 50px;">
+</div>
+<ul class="mail-list">
+    <li ng-repeat="mail in $ctrl.mails | limitTo:$ctrl.limit_mails">
+        <user-mail mail="mail" delete-mail="$ctrl.delete_mail(id)"></user-mail>
+    </li>
+</ul>
