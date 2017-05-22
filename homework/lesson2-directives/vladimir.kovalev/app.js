@@ -34,7 +34,7 @@ app.component('mailbox', {
                         delete this.emails[i];
                     }
                 });
-                if (this.selected.id === id) this.selected = null;
+                if ((this.selected) && (this.selected.id === id)) this.selected = null;
             }
         };
         this.$onInit = function() {
