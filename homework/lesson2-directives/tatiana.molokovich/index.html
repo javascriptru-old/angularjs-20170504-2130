@@ -1,0 +1,100 @@
+<html ng-app="myApp">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  .mail__item{
+    margin-bottom: 20px;
+  }
+</style>
+<body>
+
+<app-root></app-root>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+<script>
+  let app = angular.module('myApp', []);
+
+  app.component('appRoot', {
+    templateUrl: './app-root.tpl.html',
+    controller: function() {
+
+      this.setMailCount = (count) => this.mailcount = count;
+
+    }
+  });
+
+  app.component('mailbox', {
+    bindings: {
+      mailcount: '<'
+    },
+    templateUrl: './mail-box.tpl.html',
+    controller: function() {
+
+      this.$onInit = function () {
+        this.mailList = [
+          {
+              title: 'Письмо1'
+          },{
+              title: 'Письмо2'
+          },{
+              title: 'Письмо3'
+          },{
+              title: 'Письмо4'
+          },{
+              title: 'Письмо5'
+          }
+        ];
+      };
+
+      this.deleteMail = function(mail) {
+        var id = this.mailList.indexOf(mail);
+        if (id >= 0) {
+          this.mailList.splice(id, 1);
+        }
+      };
+
+      this.addMail = function(value) {
+        var mailNew = {};
+        mailNew.title = value;
+
+        this.mailList.unshift(mailNew);
+      };
+
+      this.timerId = setTimeout(() => {
+
+          this.addMail('Новое письмо');
+
+          // ВОПРОС: как обновить this.mailList на странице?
+
+      }, parseInt(Math.random()*(8000 - 3000) + 3000));
+    }
+  })
+
+  app.component('mailItem', {
+    bindings: {
+      mail: '<',
+      onDestroy: '&'
+    },
+    template: '<div class="mail__item"> {{$ctrl.mail.title}}    <button ng-click="$ctrl.delete()">Delete</button></div>  ',
+    controller: function() {
+
+      this.$onInit = function(){
+        this.date = new Date;
+      }
+
+      this.delete = function() {
+        this.onDestroy({mail: this.mail});
+
+        this.dateDelete = new Date;
+
+        //выводим время жизни письма на странице в секундах
+        console.log(Math.floor((this.dateDelete - this.date)/ 1000) + ' секунд');
+      };
+
+    }
+  })
+
+
+
+</script>
+</body>
+</html>
