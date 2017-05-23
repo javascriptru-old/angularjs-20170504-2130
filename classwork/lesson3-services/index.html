@@ -1,0 +1,66 @@
+<html ng-app="myApp">
+<body>
+
+  <app-root></app-root>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+<script>
+	// !!! 1 - второй параметр обязателен при создании
+	let app = angular.module('myApp', []);
+	// !!! 2 - camelCase нотация только в именовании
+	app.component('appRoot', {
+      template: '<ul><li ng-repeat="user in $ctrl.users">{{user.firstName}} {{user.surname}}</li></ul>',
+	  controller: ['UserService', function(UserService) {
+		  UserService.getList().then(users => this.users = users);
+	  }]
+	});
+
+	app.component('appRoot2', {
+      template: '<div ng-click="$ctrl.alert()">ALERT!</div>',
+	  controller: function(myService) {
+		  this.alert = (message) => { alert(myService.dosomething()); }
+	  }
+	});
+
+	/*
+        - Components/Directives
+		- Services
+
+        - DI: Singleton
+		- Types:
+		  - const/value - не используем
+		  - service/factory - используем что-то одно
+		  - provider - только если пишем библиотеку
+		- Out of Box:
+		  - $window, $document, $location
+		  - $timeout, $interval
+		  - $q, $http
+		  - $parse, $intepolate, $compile
+		  - $log, $exceptionHandler
+		- Dygest cicle (model <-> view)
+
+	*/
+
+	app.service('UserService', function($http) {
+
+        this.getList = () =>
+		$http.get('https://learn.javascript.ru/courses/groups/api/participants?key=uczue3').then(response => response.data);
+	});
+
+	//app.config();  - для настройки провайдеров
+	//app.run();  - для настройки сервисов
+
+    // app.config((myProvider) =>{
+    //    myProvider.x = 10;
+	// });
+
+
+	// app.run((myService) =>{
+    //    myService.x = 10;
+	// });
+
+
+
+</script>
+</body>
+</html>
