@@ -1,0 +1,51 @@
+<md-toolbar md-scroll-shrink ng-if="true">
+    <div class="md-toolbar-tools">
+        <h3>
+            <span>Mailbox</span>
+        </h3>
+    </div>
+</md-toolbar>
+<div layout="row" layout-align="space-between center">
+    <md-select ng-model="$ctrl.countOnPage" placeholder="Количество" class="md-no-underline" flex="initial">
+        <md-option value="5">5</md-option>
+        <md-option value="10">10</md-option>
+        <md-option value="15">15</md-option>
+        <md-option value="20">20</md-option>
+    </md-select>
+    <div flex="auto"></div>
+    <md-subheader class="md-no-sticky" layout="row"  flex="initial">
+        <span>Страница {{$ctrl.currentPage + 1}} из {{$ctrl.numberOfPages()}}</span>
+    </md-subheader>
+</div>
+<md-divider></md-divider>
+<div layout="row" layout-xs="column">
+    <div flex>
+        <md-list flex>
+            <email email="email"
+                   delete="$ctrl.removeEmail(email.id)"
+                   select="$ctrl.selectEmail($locals.email)"
+                   selected="$ctrl.selected.id == email.id"
+                   ng-repeat="email in $ctrl.emails | orderBy: '-time' | startFrom:$ctrl.currentPage*$ctrl.countOnPage | limitTo:$ctrl.countOnPage"
+                   flex>
+            </email>
+        </md-list>
+        <div flex layout="row">
+            <md-button flex ng-disabled="$ctrl.currentPage == 0" ng-click="$ctrl.prevPage()">Предыдущая</md-button>
+            <md-button flex ng-disabled="$ctrl.currentPage >= $ctrl.numberOfPages()-1" ng-click="$ctrl.nextPage()">Следующая</md-button>
+        </div>
+    </div>
+<!--    <div flex ng-if="$ctrl.selected !== null" class="vk-full-email">
+        <md-content flex layout-padding>
+            <md-list-item class="md-3-line">
+                <img ng-src="{{$ctrl.selected.picture}}" class="md-avatar" alt="{{$ctrl.selected.name}}" />
+                <div class="md-list-item-text" layout="column" >
+                    <h3 ng-bind="$ctrl.selected.name + ' <' + $ctrl.selected.email + '>'"></h3>
+                    <h4 ng-bind="$ctrl.selected.title"></h4>
+                    <p ng-bind="$ctrl.selected.time"></p>
+                </div>
+                <md-divider></md-divider>
+            </md-list-item>
+            <p ng-bind="$ctrl.selected.body"></p>
+        </md-content>
+    </div>-->
+</div>

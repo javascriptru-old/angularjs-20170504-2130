@@ -1,0 +1,13 @@
+<md-list-item class="md-3-line {{ $ctrl.class() }}">
+    <img ng-src="{{$ctrl.email.picture}}" class="md-avatar" alt="{{$ctrl.email.name}}" />
+    <div class="md-list-item-text" layout="column"  ng-click="$ctrl.select({email: $ctrl.email})">
+        <h3 ng-bind="$ctrl.email.name + ' <' + $ctrl.email.email + '>'"></h3>
+        <h4 ng-bind="$ctrl.email.title"></h4>
+        <p ng-bind="$ctrl.email.time"></p>
+    </div>
+    <md-button class="md-secondary" ng-click="$ctrl.delete()">Удалить</md-button>
+</md-list-item>
+<md-list-item ng-if="$ctrl.selected">
+    <span ng-bind="$ctrl.email.body" md-offset="2"></span>
+</md-list-item>
+<md-divider></md-divider>
