@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User-list</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body ng-app="userCards">
+
+<main></main>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+<script>
+    'use strict';
+    var app = angular.module('userCards', []);
+
+    app.component('main', {
+        templateUrl: 'main.html',
+        controller: function () {
+
+        }
+    });
+
+    app.service("mailService", function ($http) {
+        this.getLetters = () => {
+            return $http.get("http://test-api.javascript.ru/v1/anton.kondrasev/letters");
+        };
+
+        this.createLetter = (data) => {
+            return $http.post("http://test-api.javascript.ru/v1/anton.kondrasev/letters", data);
+        };
+    });
+
+    app.component('mailBox', {
+        bindings: {
+            display: '@'
+        },
+        templateUrl: 'mail-box.html',
+        controller: function (mailService) {
+            mailService.getLetters().then((response) => {
+                console.log(response);
+                this.letters = response.data;
+            });
+
+            this.deleteLetter = (letter) => {
+                this.letters = this.letters.filter(function (el) {//todo delete from db
+                    return el.id !== letter.id
+                });
+            };
+
+            this.addLetter = () => {
+                mailService.createLetter({
+                    mailbox: "1", //{"errors":{"mailbox":"Cast to ObjectID failed for value \"1\" at path \"mailbox\""}} - 400 error
+                    to: "some@mail.ru",
+                    subject: "subject",
+                    title: "title",
+                    body: "content"
+                }).then((response) => {
+                    console.log(response);
+                    return mailService.getLetters();
+                }).then((response) => {
+                    this.letters = response.data;
+                });
+
+                clearTimeout(this.timer);
+                this.timer = generateTimeout(this.addLetter);
+            };
+
+            this.timer = generateTimeout(this.addLetter);
+        }
+    });
+
+    app.component('mailLetter', {
+        bindings: {
+            letter: '<',
+            onDeleteClicked: "&"
+        },
+        templateUrl: 'mail-letter.html',
+        controller: function () {
+            this.$onInit = () => {
+                this.timeLived = 0;
+                this.interval = setInterval(() => {
+                    this.timeLived++;
+                }, 1000);
+            };
+
+            this.$onDestroy = () => {
+                clearInterval(this.interval);
+                console.log(this.letter.title, this.timeLived);
+            }
+        }
+    });
+
+
+
+    function generateTimeout(handler) {
+        let randomInterval = Math.floor(Math.random() * (8 - 3)) + 3;
+        return setTimeout(handler, randomInterval * 1000);
+    }
+</script>
+</body>
+</html>
