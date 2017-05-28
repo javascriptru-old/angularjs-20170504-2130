@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User-list</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .red {
+            background-color: #990000;
+            color: white;
+        }
+
+        .red .panel-heading, .red .panel-footer {
+            background-color: #550000;
+            color: #fff;
+        }
+    </style>
+</head>
+<body ng-app="userCards">
+
+<main></main>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+<script>
+    'use strict';
+    var app = angular.module('userCards', []);
+
+    app.service("userService", function ($http) {
+        this.getUsers = function () {
+            return $http.get("https://learn.javascript.ru/courses/groups/api/participants?key=uczue3");
+        }
+    });
+
+    app.component('main', {
+        restrict: 'E',
+        templateUrl: 'main.html',
+        controller: function (userService) {
+            userService.getUsers().then((response) => {
+                console.log(response);
+                this.users = response.data;
+            })
+        }
+    });
+
+    app.component('userCard', {
+        restrict: 'E',
+        bindings: {
+            user: '<'
+        },
+        templateUrl: 'user-card.html',
+        controller: function () {
+            var self = this;
+            this.onClick = function () {
+                self.selected = !self.selected;
+            }
+        }
+    });
+
+    app.component('avatar', {
+        restrict: 'E',
+        bindings: {
+            img: '<'
+        },
+        templateUrl: 'avatar.html'
+    });
+</script>
+</body>
+</html>
