@@ -1,0 +1,6 @@
+<md-input-container>
+    <label ng-bind="$ctrl.label"></label>
+    <md-select ng-model="$ctrl.currency" ng-change="$ctrl.changeCurrency()">
+        <md-option ng-value="opt" ng-repeat="opt in $ctrl.curList">{{ opt }}</md-option>
+    </md-select>
+</md-input-container>
