@@ -41,13 +41,6 @@ app.service('convert', ['$http', function($http) {
                 result.push(key);
             };
             return result;
-            /*
-            Вопрос: как это работает ?
-            В контроллере мы вызываем ".then", значит здесь возвращаем "Promise".
-            Но я не совсем понял где мы его тут возвращаем.
-            Причём промис непростой, так как он запускает обновление модели angular.
-            Если вернуть обычный промис (return new Promise()) - модель не обновляется (изменения не отображаются в DOM)
-            * */
         });
     this.getValue = (currency) => {
         if (currency == this.data.base) return 1;
