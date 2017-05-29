@@ -1,4 +1,4 @@
-/** @author ihor.horovyi */
+/*@author ihor.horovyi*/
 
 'use strict'
 
