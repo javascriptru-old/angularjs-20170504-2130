@@ -130,7 +130,7 @@
           $http.get('https://learn.javascript.ru/courses/groups/api/participants?key=uczue3')
               .then((successResponse) => {
                   successResponse.data.forEach((item) => {
-                    $log.info(item);
+                    this.users.push(item);
                   });
               },
               (errorResponse) => {
@@ -140,7 +140,7 @@
           };
 
       this.getUserList = () => {
-          this.getTestUserList();
+          //this.getTestUserList();
           this.getUserListByHTTP();
       };
 
@@ -148,6 +148,10 @@
 
           var testUsers = [
               {
+                  firstName: 'First Name',
+                  surname: 'Surname',
+                  photo: '',
+                  country: 'ru',
                   name: 'Ivan Smirnov',
                   address: 'pl.Mira, 5',
                   sex: 'male',
@@ -156,6 +160,10 @@
                   avatar: 'https://randomuser.me/api/portraits/med/men/83.jpg'
               },
               {
+                  firstName: 'First Name',
+                  surname: 'Surname',
+                  photo: '',
+                  country: 'ru',
                   name:'Piotr Kruglov',
                   address: 'Karlsplatz, 2',
                   sex: 'male',
@@ -173,12 +181,45 @@
 
       });
 
+      app.service('CurrencyRateService', function($log, $http) {
+
+          this.rate = {};
+
+          this.getCurrencyRateFromServer = (base, target) => {
+
+              $log.info('CurrencyRateService.getCurrencyRateFromServer()', base, target);
+
+              if(base && base === target) {
+                  this.rate[base + target] = 1;
+              } else {
+
+                  $http.get('http://api.fixer.io/latest?base=' + base + '&symbols=' + target)
+                      .then((successResponse) => {
+
+                          try {
+                              this.rate[base + target] = successResponse.data.rates[target];
+                              $log.info('Rate ' + base + '/' + target, this.rate[base + target]);
+                          } catch (e) {
+                              $log.error('Currency rate is not found', e);
+                          }
+                          //$log.info(successResponse);
+                      }, (errorResponse) => {
+                          $log.info('Error occurred during HTTP GET request', errorResponse);
+                      });
+              }
+          };
+
+      });
+
+
+
       app.component('appRoot', {
       templateUrl: './app-root.tpl.html',
-	  controller: function($log, $timeout, MODES, MailService) {
+	  controller: function($log, $timeout, MODES, MailService, UserService) {
           // initializing parameters
           this.MODES = MODES;
           this.MailBox = MailService;
+          this.UserService = UserService;
 
           this.mode = this.MODES.LETTERS;
           this.setDisplayMode = (mode) => {
@@ -255,7 +296,7 @@
             this.users = UserService.users;
 
             this.shouldShowUser = (user) => {
-                if(this.onlyWithPhoto && user.avatar === undefined) {
+                if(this.onlyWithPhoto && !user.photo) {
                     return false;
                 }
                 return true;
@@ -274,7 +315,7 @@
           this.state = '';
 
           this.selectCard = () => {
-              $log.info('onlyWithPhoto=' + this.onlyWithPhoto);
+              $log.info('onlyWithPhoto=' + this.photoNeeded);
 
               this.state = this.state === 'selected' ? '' : 'selected';
           };
@@ -283,10 +324,8 @@
           };
           this.isVisible = () => {
 
-              return true;
-
-              $log.info('photoNeeded:', this.photoNeeded, 'Avatar:', this.user.avatar);
-              if(this.photoNeeded && this.user.avatar === undefined) {
+              //$log.info('photoNeeded:', this.photoNeeded, 'Avatar:', this.user.photo);
+              if(this.photoNeeded && !this.user.photo) {
                   return false;
               }
               return true;
@@ -306,6 +345,41 @@
       }
   });
 
+  app.component('currencyConverter', {
+      bindings: {
+      },
+      templateUrl: './currency-converter.tpl.html',
+      controller: function($log, CurrencyRateService) {
+
+          this.amount = 1;
+          this.rate = CurrencyRateService.rate;
+          this.currency = 'EUR';
+          this.currencyTo = 'USD';
+
+          this.$onInit = () => {
+              //$log.info('Currency converter $onInit()');
+          };
+
+          this.onConvert = () => {
+              if(!this.rate[this.currency + this.currencyTo]) {
+                  this.getCurrencyRate(this.currency, this.currencyTo);
+              }
+          };
+
+          this.getConvertedAmount = () => {
+              if(!this.rate[this.currency + this.currencyTo] || !this.amount) {
+                  return null;
+              } else {
+                  //return Number(Math.round((this.amount * this.rate[this.currency + this.currencyTo])+'e2')+'e-2');
+                  return (this.amount * this.rate[this.currency + this.currencyTo]).toFixed(5).replace( /\.?0+$/, "");
+              }
+          };
+
+          this.getCurrencyRate = (base, target) => {
+              CurrencyRateService.getCurrencyRateFromServer(base, target);
+          };
+      }
+  });
 
 
 </script>
