@@ -1,0 +1,3 @@
+<div class="mail__list">
+  <mail-item ng-repeat="item in $ctrl.mailList | limitTo:$ctrl.mailcount as results" mail="item" on-destroy="$ctrl.deleteMail(item)"></mail-item>
+</div>

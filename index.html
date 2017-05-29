@@ -1,0 +1,112 @@
+<html>
+  <head>
+      <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+  </head>
+  <body ng-app="myapp">
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+
+  <mailbox></mailbox>
+
+    <script>
+      var app=angular.module('myapp',['ngMaterial']);
+      app.component('mailbox',{
+        bindings:{
+          mailtoshow : '@'
+        },
+        controller:function(){
+            this.itemperpage='3'; //default value
+            this.PageNum = 1; 
+            
+            this.ShowNext=true;
+            this.generatedMails=0;
+            this.AllMails=[{Subject:'How are you',From:'Friend',CC:'coworkers'},
+                                {Subject:'Meeting',From:'google',CC:'director'},
+                                {Subject:'Football',From:'SchoolFriend',CC:'me'},
+                                {Subject:'Home',From:'wife',CC:'Tescha'},
+                                {Subject:'aa',From:'bb',CC:'cc'}];
+           this.MailCount = {count:this.AllMails.length};
+            this.ReceivedMails = this.AllMails.slice(0,this.itemperpage);
+            this.$onInit=()=>{ 
+              var self=this;
+            (function recursiveInterval()
+            { 
+              var rand=Math.floor(Math.random() * (5000)) + 3000;
+              setTimeout(()=>{
+                self.generatedMails++;
+                self.AllMails.push({Subject:'aa'+self.generatedMails,From:'bb'+self.generatedMails,CC:'cc'+self.generatedMails});
+                console.log('Generated mail '+self.generatedMails +' Random : '+rand);
+                self.MailCount.count ++;
+                recursiveInterval(); 
+                },rand);
+            }()); 
+            }
+
+            this.settime=(ind)=>{ this.AllMails[ind].StartTime=Date.now(); }
+            this.textChange=(count)=>{
+              if(count<this.AllMails.length) this.ShowNext=true;
+              else this.ShowNext=false;
+              this.ReceivedMails = this.AllMails.slice(0,this.itemperpage);
+            }
+            this.NextPage=()=>{
+                this.ReceivedMails = this.AllMails.slice(this.itemperpage*(this.PageNum),++this.PageNum*this.itemperpage);
+            }
+            this.BackPage=()=>{
+                this.PageNum--;
+                this.ReceivedMails = this.AllMails.slice(this.itemperpage*(this.PageNum-1),(this.PageNum)*this.itemperpage);               
+            }
+            this.DeleteMail=(ind)=>{
+              console.log('Deleted mail was exist on page : '+(Date.now()-this.AllMails[ind].StartTime)+' ms');
+               this.AllMails.splice(ind,1);
+               this.ReceivedMails.splice(ind,1);
+              
+              }
+        },
+        template:`
+          <md-toolbar class="md-theme-light">
+            <h2 class="md-toolbar-tools">
+              <span>Mail Box</span>
+              <div flex></div>
+              <label>Mails show in page</label><input type='text' ng-disable='$ctrl.PageNum-1' ng-model='$ctrl.itemperpage' ng-change="$ctrl.textChange($ctrl.itemperpage)"></input>
+            </h2>
+          </md-toolbar>
+          <div  ng-repeat='line in $ctrl.ReceivedMails track by $index' ng-init='$ctrl.settime($index)'>
+          <lines mailinfo=line callback=$ctrl.DeleteMail($index)>
+          </div>
+          <md-button class='md-raised' ng-if='$ctrl.ShowNext' ng-click='$ctrl.NextPage()'> Next Page >>> </md-button>
+          <md-button class='md-raised' ng-if='$ctrl.PageNum-1' ng-click='$ctrl.BackPage()'> Back Page >>> </md-button>
+          `
+      });
+      app.component('lines',{
+        bindings:{
+           mailinfo:'<',
+           callback: '&'
+        },
+        controller:function(){
+            this.$onInit=function(){}
+        },
+        template:`        
+            <md-content>
+              <md-list>
+                <md-list-item class="md-3-line">
+                  <div class="md-list-item-text">
+                    <h3>Subject : {{$ctrl.mailinfo.Subject}}</h3>
+                    <h4>From : {{$ctrl.mailinfo.From}}</h4>
+                    <p>CC : {{$ctrl.mailinfo.CC}}</p>
+                  </div>
+                  <md-button class="md-secondary" ng-click='$ctrl.callback()'>Delete mail</md-button>
+                  <md-divider ng-if="!$last"></md-divider>
+                </md-list-item>
+              </md-list>
+            </md-content>
+        `
+      });
+    </script>    
+  </body>
+</html>
