@@ -1,0 +1,17 @@
+<br/>
+<div class="container">
+	<div class="col-xs-12">
+		<label>
+			<input type="checkbox" name="btnUserWithPhoto" ng-model="$ctrl.cardWithPhoto">
+			Показывать только с фото
+		</label>
+	</div>	
+</div>
+<br/>
+<div class="container">
+	<div class="user-list">
+		<div class="user-item" ng-repeat="item in $ctrl.cards" ng-if="!$ctrl.cardWithPhoto || item.img">
+			<user-card card="item"></user-card>
+		</div>		
+	</div>
+</div>

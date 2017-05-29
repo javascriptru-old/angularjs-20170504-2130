@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<title>Карточки пользователей</title>
+	<meta charset="utf-8">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<style type="text/css">
+		img{
+			max-width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<user-list></user-list>
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script type="text/javascript">
+		let app = angular.module('myApp', []);
+
+		app.component('userList', {
+			templateUrl: './user-list.tpl.html',
+			controller: function(){
+				this.cards = [{
+					fio: 'Иванов Иван',
+					happyBirthday: '1976-10-10',
+					sex: 'мужской',
+					adress: 'ул. Звенигороская, 47б',
+					email: 'ivanov@mail.ru',
+					img: './img/1.jpg'
+				}, {
+					fio: 'Андреева Ирина',
+					happyBirthday: '1992-12-11',
+					sex: 'женский',
+					adress: 'ул. Орджоникидзе, 2',
+					email: 'andreeva@mail.ru',
+					img: ''
+				}, {
+					fio: 'Петров Максим',
+					happyBirthday: '1979-04-13',
+					sex: 'мужской',
+					adress: 'ул. Ленинский проспект, 16а',
+					email: 'petrov@mail.ru',
+					img: ''
+				}, {
+					fio: 'Пупкина Зинаида',
+					happyBirthday: '1987-03-12',
+					sex: 'женский',
+					adress: 'ул. Ленина, 182',
+					email: 'pupkina@mail.ru',
+					img: './img/2.jpg'
+				}, {
+					fio: 'Тарасов Леонид',
+					happyBirthday: '1995-07-02',
+					sex: 'мужской',
+					adress: 'ул. Мира, 113',
+					email: 'tarasov@mail.ru',
+					img: './img/3.jpg'
+				}]
+			}
+		});
+
+		app.component('userCard', {
+			bindings: {
+				card: '<'
+			},
+			templateUrl: './user-card.tpl.html',
+			controller: function(){
+				this.backgroundCard = '';
+
+				this.setBackgroundCard = () => {
+					(this.backgroundCard == '')?this.backgroundCard = '#efefef':this.backgroundCard = '';			
+				}				
+			}
+		});
+
+		app.component('userAvatar', {
+			bindings: {
+				img: '<image'
+			},
+			templateUrl: './user-avatar.tpl.html',
+			controller: function(){}
+		});
+	</script>
+</body>
+</html>
