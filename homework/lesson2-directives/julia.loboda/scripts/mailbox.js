@@ -11,25 +11,49 @@ app.component('mailList', {
         var self = this;
 
         this.getMails = function () {
-            this.trustSrc = function(src) {
+            this.trustSrc = function (src) {
                 return $sce.trustAsResourceUrl(src);
             }
             let url = "http://random.vkhs.ru/letters/50";
             $http({
                 method: 'GET',
                 url: this.trustSrc(url),
-                params: {
-                    format: 'jsonp',
-                    name: 'Random mails'
-                }
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function (success) {
                 self.mails = success.data;
             }, function (data) {
                 console.log("Invalid data returned");
+            });
+        };
+
+
+        var data = {
+            "user" : {
+                "fullName": "Julia",
+                "email": "yulia.loboda@gmail.com",
+            }
+        };
+
+
+        //ВОПРОС POST не работает ошибка 404
+        this.addLetter = function () {
+            this.url = 'http://test-api.javascript.ru/v1/yloboda/users';
+            $http({
+                method: 'POST',
+                url: this.url,
+                headers: {'Content-Type': 'application/json'},
+                data: data
+            }).then(function (data) {
+                console.log(data);
+                //self.mails = success.data;
+            }, function (data, status) {
+                console.log("Invalid data returned");
                 console.log(data);
             });
-            return this.mails;
         };
+
+
+        this.addLetter();
 
 
         this.getMails();
@@ -57,6 +81,11 @@ app.component('mailList', {
                     self.quantity++;
                 }, 3000);
             }
+        };
+
+        //ВОПРОС: НЕ работает $onDestroy
+        this.$onDestroy = function (val) {
+            alert('Destroy');
         };
 
         this.deleteMail = function (mail) {

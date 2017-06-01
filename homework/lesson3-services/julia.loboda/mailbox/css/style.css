@@ -1,0 +1,23 @@
+.active{
+    border: 1px solid red;
+}
+
+a{
+    cursor: pointer;
+}
+
+.list-group-item{
+    margin: 0 0 -1px 0 !important;
+}
+
+.list-group-item:last{
+    margin: 0;
+}
+
+.not-active{
+    color: 1px solid red;
+}
+
+.active{
+    color: 1px solid blue;
+}

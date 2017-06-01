@@ -1,0 +1,24 @@
+<nav aria-label="Page navigation" ng-if="$ctrl.mails.length >0">
+    <ul class="pagination">
+        <li>
+            <span>
+                Show mails on a page
+            </span>
+        </li>
+        <li ng-repeat="i in $ctrl.showNumber()" ng-click="$ctrl.getNumber($index)">
+            <a href="#">{{i}}</a>
+        </li>
+    </ul>
+</nav>
+
+
+<ul class="list-group">
+    <mail-body ng-repeat="mail in $ctrl.mails | limitTo:$ctrl.quantity" mail="mail" on-delete="$ctrl.deleteMail(mail)"
+               quantity="quantity.currentValue">
+    </mail-body>
+</ul>
+
+<div ng-if="$ctrl.mails.length==0 ">
+    All mails were deleted.
+</div>
+
