@@ -1,0 +1,79 @@
+<html ng-app="myApp">
+	<head>
+		<style>
+			.myactiveclass {
+				color: red;
+			}
+		</style>
+	</head>
+<body>
+  <app-root></app-root>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+<script src="https://unpkg.com/angular-ui-router@1.0.3/release/angular-ui-router.min.js"></script>
+
+<script>
+	let app = angular.module('myApp', ['ui.router']);
+	app.config(($stateProvider) => {
+
+		$stateProvider.state({
+			name: 'home',
+			url: '/',
+			template: '<home></home>',
+		});
+
+		$stateProvider.state({
+			name: 'user',
+			url: '/user/:userId',
+			template: '<user user-id="$ctrl.userId"></user>',
+			controller: function($stateParams) {
+         this.userId = $stateParams.userId;
+			},
+			controllerAs: '$ctrl'
+		});
+
+		$stateProvider.state({
+			name: 'user.profile',
+			url: '/profile',
+			template: 'profile'
+		});
+
+		$stateProvider.state({
+			name: 'user.settings',
+			url: '/settings',
+			template: 'settings'
+		});
+
+	});
+	app.component('appRoot', {
+      template: `
+			<a ui-sref="home" ui-sref-active="myactiveclass">home</a>
+			<a ui-sref="user({userId: 73})" ui-sref-active="myactiveclass">user</a>
+			<a ui-sref="user.profile" ui-sref-active="myactiveclass">profile</a>
+			<a ui-sref="user.settings" ui-sref-active="myactiveclass">settings</a>
+			<ui-view></ui-view>`
+	});
+
+	app.component('home', {
+		template: 'HOME',
+		controller: function() {
+
+		}
+	})
+
+	app.component('user', {
+		bindings: {
+			id: '<userId'
+		},
+		template: 'USER <ui-view></ui-view>',
+		controller: function() {
+			this.$onInit = function() {
+        console.log(this.id);
+			}
+		}
+	})
+
+
+</script>
+</body>
+</html>

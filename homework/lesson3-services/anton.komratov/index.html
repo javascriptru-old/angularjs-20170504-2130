@@ -350,6 +350,11 @@
       },
       templateUrl: './currency-converter.tpl.html',
       controller: function($log, CurrencyRateService) {
+          //$scope
+          this.loding = true;
+          //then =>  this.loding = false;
+
+
 
           this.amount = 1;
           this.rate = CurrencyRateService.rate;
