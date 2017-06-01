@@ -33,15 +33,22 @@ app.component('currencyBox', {
 });
 
 app.service('convert', ['$http', function($http) {
-    this.getCurList = ()=>
-        $http.get('http://api.fixer.io/latest').then(response => {
-            this.data = response.data;
+    let curListCachePromise = null;
+    this.getCurList = ()=>{
+        if(!curListCache) {
+        curListCachePromise =
+            $http.get('http://api.fixer.io/latest').then(response => {
             let result = [this.data.base];
             for (let key in  this.data.rates) {
                 result.push(key);
             };
             return result;
         });
+
+        }
+
+    }
+
     this.getValue = (currency) => {
         if (currency == this.data.base) return 1;
         return this.data.rates[currency];

@@ -3,7 +3,7 @@ let app =angular.module('todomvc', []);
 
 app.component('todoList', {
     templateUrl: 'todoList.tpl.html',
-    controller: ['todos', function( todos ) {
+    controller: ['TodosService', function( todos ) {
 
         this.getTodos = () => todos.get().then((data) => this.todos = data);
 
@@ -39,7 +39,7 @@ app.component('todoItem', {
     templateUrl: 'todoItem.tpl.html'
 });
 
-app.service('todos', ['$http', function($http){
+app.service('TodosService', ['$http', function($http){
     this.url = 'http://test-api.javascript.ru/v1/vktodos';
     this.get = () => $http.get(this.url + '/tasks').then( response => response.data );
     this.add = ( task ) => $http.post(this.url + '/tasks', task);

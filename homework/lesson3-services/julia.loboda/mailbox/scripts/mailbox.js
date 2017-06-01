@@ -24,8 +24,8 @@ app.component('mailList', {
                 method: 'GET',
                 url: this.trustSrc(url),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).then(function (success) {
-                self.mails = success.data;
+            }).then( (success) => {
+                this.mails = success.data;
             }, function (data) {
                 console.log("Invalid data returned");
             });

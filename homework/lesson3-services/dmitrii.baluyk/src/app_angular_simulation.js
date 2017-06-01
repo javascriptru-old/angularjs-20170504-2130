@@ -8,7 +8,12 @@ let ctrl = {
 };
 
 document.addEventListener('DOMContentLoaded', function(){
-    var elem = document.querySelectorAll("*[ng-an_sim-repeat]");
+    var elems = document.querySelectorAll("*[ng-an_sim-repeat]");
+
+elems.forEach(element => {
+
+})
+
 
     for(let i=0;i<elem.length;i++){
         let elem_this = elem[i],

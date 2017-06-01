@@ -2,8 +2,9 @@ let app = angular.module('myApp', []);
 
 //ВОПРОС у сервисов свой this, чтобы использовать скоуп с контроллера, нужно передавать через переменные?
 app.service('CurrencyConvertService', function () {
-    var self = this;
+    this.x = 10;
     this.getResultConvert = function (value, selectFrom, selectTo, currencies, result, error) {
+        this.x = 5;
         if (!value || !selectFrom || !selectTo) {
             return error;
         }
@@ -49,6 +50,7 @@ app.component('currencyConvert', {
         this.doConvert = function () {
             this.result = '';
             this.error = 'Wrong data';
+            //CurrencyConvertService.x;
             this.resultInput = CurrencyConvertService.getResultConvert(this.value, this.selectCurrency, this.currencyResult, this.currencies, this.result, this.error);
         }
 
