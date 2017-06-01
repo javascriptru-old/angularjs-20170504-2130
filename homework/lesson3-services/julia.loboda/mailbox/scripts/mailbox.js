@@ -3,10 +3,15 @@ let app = angular.module('myApp', ['ngSanitize']);
 
 app.component('mailList', {
     templateUrl: './templates/maillist.tpl.html',
+    bindings: {
+        mails: "<"
+    },
     controller: function ($http, $interval, $sce) {
         this.loadTime = performance.now();
 
         this.mails = {};
+        this.letter = {};
+        var data = {};
 
         var self = this;
 
@@ -14,7 +19,7 @@ app.component('mailList', {
             this.trustSrc = function (src) {
                 return $sce.trustAsResourceUrl(src);
             }
-            let url = "http://random.vkhs.ru/letters/50";
+            let url = "http://test-api.javascript.ru/v1/yloboda/letters";
             $http({
                 method: 'GET',
                 url: this.trustSrc(url),
@@ -27,36 +32,60 @@ app.component('mailList', {
         };
 
 
-        var data = {
-            "user" : {
-                "fullName": "Julia",
-                "email": "yulia.loboda@gmail.com",
+        this.generateLetter = function () {
+            this.trustSrc = function (src) {
+                return $sce.trustAsResourceUrl(src);
             }
-        };
+            let url = "http://random.vkhs.ru/letters/1";
+            $http({
+                method: 'GET',
+                url: this.trustSrc(url),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function (success) {
+                data = success.data[0];
+                self.addLetter();
+            }, function (data) {
+                console.log("Invalid data returned");
+            });
+        }
+
+        this.newMail = '111';
 
 
-        //ВОПРОС POST не работает ошибка 404
         this.addLetter = function () {
-            this.url = 'http://test-api.javascript.ru/v1/yloboda/users';
+            let url = 'http://test-api.javascript.ru/v1/yloboda/letters';
             $http({
                 method: 'POST',
-                url: this.url,
-                headers: {'Content-Type': 'application/json'},
-                data: data
-            }).then(function (data) {
-                console.log(data);
-                //self.mails = success.data;
+                url: url,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data: data,
+                transformRequest: function (obj) {
+                    let str = '';
+                    for (var key in obj) {
+                        str = 'subject=' + obj['title'] + '&body=' + obj['body'] + '&to=' + obj['email'] + '&mailbox=592c7ce755fc9c1d04587f9e'
+                    }
+                    return str;
+                }
+            }).then(function (success) {
+                self.mails.unshift(success.data);
+
+                //Add active class
+                self.getSelected = function(index) {
+                    self.selected = index._id;
+                    self.id = index._id;
+                }
+
+                self.id = success.data._id;
+
+
             }, function (data, status) {
                 console.log("Invalid data returned");
                 console.log(data);
             });
+
+
         };
 
-
-        this.addLetter();
-
-
-        this.getMails();
 
         this.showNumber = function () {
             this.arr = [];
@@ -73,13 +102,19 @@ app.component('mailList', {
         this.$onInit = function () {
             console.log('initializing controllers, setting default values');
             self.quantity = 5;
+            self.getMails();
         };
 
         this.$onChanges = function (changes) {
             if (changes) {
+
                 $interval(function () {
-                    self.quantity++;
-                }, 3000);
+
+                    self.generateLetter();
+
+                    console.log(self.mails.length);
+
+                }, 10000);
             }
         };
 
@@ -88,14 +123,30 @@ app.component('mailList', {
             alert('Destroy');
         };
 
+
         this.deleteMail = function (mail) {
             let index = this.mails.indexOf(mail);
+            console.log(index);
             if (index >= 0) {
-                this.mails.splice(index, 1);
-                this.deleteTime = performance.now();
-                console.log('loadTime: ' + this.loadTime + " deleteTime: " + this.deleteTime);
-                this.mailLive = this.deleteTime - this.loadTime;
-                alert("'" + mail.title + "'" + " will be deleted \n\r Mail was living " + this.mailLive + " miliseconds.");
+
+                $http({
+                    method: 'DELETE',
+                    url: 'http://test-api.javascript.ru/v1/yloboda/letters/' + mail._id,
+                    headers: {
+                        'Content-type': 'application/json;charset=utf-8'
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response.data);
+                        self.mails.splice(index, 1);
+                        self.deleteTime = performance.now();
+                        console.log('loadTime: ' + this.loadTime + " deleteTime: " + this.deleteTime);
+                        self.mailLive = self.deleteTime - self.loadTime;
+                        alert("'" + mail.subject + "'" + " will be deleted \n\r Mail was living " + self.mailLive + " miliseconds.");
+                    }, function (rejection) {
+                        console.log(rejection.data);
+                    });
+
             }
         }
 

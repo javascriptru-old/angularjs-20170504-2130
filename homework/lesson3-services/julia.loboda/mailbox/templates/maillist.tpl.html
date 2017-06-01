@@ -13,7 +13,8 @@
 
 
 <ul class="list-group">
-    <mail-body ng-repeat="mail in $ctrl.mails | limitTo:$ctrl.quantity" mail="mail" on-delete="$ctrl.deleteMail(mail)" quantity="quantity.currentValue">
+    <mail-body ng-repeat="mail in $ctrl.mails | limitTo:$ctrl.quantity" mail="mail" on-delete="$ctrl.deleteMail(mail)"
+               quantity="quantity.currentValue">
     </mail-body>
 </ul>
 
