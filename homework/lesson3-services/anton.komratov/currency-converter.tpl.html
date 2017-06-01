@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-md-4">
+            <form ng-submit="$ctrl.onConvert()"
+                  novalidate="novalidate">
+
+                <div class="form-group" >
+                    <label class="control-label">Сумма</label >
+                    <input type="number"
+                           class="form-control"
+                           ng-model="$ctrl.amount"
+                           width="100px"
+                           min="1"
+                           max="100000000000"
+                           required="required" >
+                </div >
+
+                <div class="form-group" >
+                    <label class="control-label">Валюта</label >
+                    <select class="form-control"
+                            ng-model="$ctrl.currency"
+                            required="required" >
+                        <option value="" >Please Choose</option >
+                        <option value="USD" >USD</option >
+                        <option value="EUR" >EUR</option >
+                    </select >
+                </div >
+
+                <div class="form-group" >
+                    <label class="control-label">В валюту</label >
+                    <select class="form-control"
+                            ng-model="$ctrl.currencyTo"
+                            required="required" >
+                        <option value="" >Please Choose</option >
+                        <option value="USD" >USD</option >
+                        <option value="EUR" >EUR</option >
+                    </select >
+                </div >
+
+                <div class="form-group" >
+                    <label class="control-label">Курс</label >
+                    <label class="form-control">{{$ctrl.rate[$ctrl.currency + $ctrl.currencyTo]}}</label >
+                </div >
+
+                <div class="form-group" >
+                    <label class="control-label convert-label">Результат</label >
+                    <label class="form-control convert-result">{{$ctrl.getConvertedAmount()}}</label >
+                </div >
+
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Пересчитать</button>
+                </div>
+
+            </form >
+    </div>
+</div>

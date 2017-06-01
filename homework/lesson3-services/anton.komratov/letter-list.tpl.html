@@ -1,0 +1,9 @@
+<div class="row">
+    <div class="col-md-9">
+        <ul class="list-group">
+                <div ng-repeat="letter in $ctrl.letters">
+                    <letter ng-if="$ctrl.shouldDisplayLetter($index)" letter="letter" remove="$ctrl.removeLetter(letter)"></letter>
+                </div>
+        </ul>
+    </div>
+</div>
