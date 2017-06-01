@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Vladimir Kovalev - Bonus</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+        }
+        .red {
+            background-color: #ff7774;
+        }
+        .blue {
+            background-color: #8ee4ff;
+        }
+    </style>
+    <script src="bonus.js"></script>
+    <script>
+        /* Инициализируем модель (не обязательно) */
+        bonus.setModel({
+            checkbox: true,
+            text: 'Тест',
+            rect: {
+                l: 5,
+                w: 10,
+                units: 'м2'
+            },
+            select: 1
+        });
+    </script>
+</head>
+<body>
+    <div bonus>
+        <h3>Show | Hide</h3>
+        Checkbox: <input b-model="checkbox" type="checkbox"  checked>
+        <div class="box red" b-show="checkbox">Показать если  checked ("show" directive)</div>
+        <div class="box blue" b-hide="checkbox">Показать если НЕ checked ("hide" directive)</div>
+        <br>
+        <hr>
+
+        <h3>Model</h3>
+        <input type="text" b-model="text" placeholder="Text">
+        <input type="text" b-model="text" placeholder="Text">
+        <input type="text" b-model="text" placeholder="Text">
+        <br><br>
+        <select b-model="select">
+            <option value="1">Раз</option>
+            <option value="2">Два</option>
+            <option value="3">Три</option>
+        </select>
+        <select b-model="select">
+            <option value="1">Раз</option>
+            <option value="2">Два</option>
+            <option value="3">Три</option>
+        </select>
+        <select b-model="select">
+            <option value="1">Раз</option>
+            <option value="2">Два</option>
+            <option value="3">Три</option>
+        </select>
+        <br>
+        <br>
+        <hr>
+
+        <h3>Bind</h3>
+        Длина: <input type="number" b-model="rect.l" placeholder="Длина" value="1"><br>
+        Ширина: <input type="number" b-model="rect.w" placeholder="Ширина" value="1"><br>
+        Единицы измерения: <input type="text" b-model="rect.units" placeholder="Единицы измерения">
+        <p>Площадь: <span b-bind="rect.l*rect.w + ' ' + rect.units"></span></p>
+    </div>
+</body>
+</html>
