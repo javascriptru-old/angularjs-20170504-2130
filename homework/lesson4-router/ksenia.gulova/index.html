@@ -26,9 +26,14 @@
         });
 
         $stateProvider.state({
-            name: 'user',
+            name: 'users',
+            url: '/users',
+            template: '<user-cards></user-cards>'
+        });
+        $stateProvider.state({
+            name: 'usersById',
             url: '/users/:userId',
-            template: '<input type="text" ng-disabled="true" placeholder="User Id (Surname)" required ng-model="$ctrl.userId"><user-cards user-id="$ctrl.userId"></user-cards>',
+            template: 'User Id (Surname): {{$ctrl.userId}}<user-cards user-id="$ctrl.userId"></user-cards>',
             controller: function($stateParams) {
                 this.userId = $stateParams.userId;
             },
@@ -44,7 +49,8 @@
     app.component('appRoot', {
         template: `
 			<a ui-sref="login">Login</a>
-			<a ui-sref="user({userId: ''})">Users</a>
+			<a ui-sref="users">Users</a>
+			<a ui-sref="usersById({userId: 'Gulova'})">User by id</a>
 			<a ui-sref="mailbox">Mailbox</a>
 			<ui-view></ui-view>`
     });
