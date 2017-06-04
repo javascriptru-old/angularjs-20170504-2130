@@ -28,7 +28,7 @@
         $stateProvider.state({
             name: 'user',
             url: '/users/:userId',
-            template: '<input type="text" placeholder="User Id (Surname)" required ng-model="$ctrl.userId"><user-cards user-id="$ctrl.userId"></user-cards>',
+            template: '<input type="text" ng-disabled="true" placeholder="User Id (Surname)" required ng-model="$ctrl.userId"><user-cards user-id="$ctrl.userId"></user-cards>',
             controller: function($stateParams) {
                 this.userId = $stateParams.userId;
             },
