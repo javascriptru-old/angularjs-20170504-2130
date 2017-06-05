@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User-list</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .red {
+            background-color: #990000;
+            color: white;
+        }
+
+        .red .panel-heading, .red .panel-footer {
+            background-color: #550000;
+            color: #fff;
+        }
+    </style>
+</head>
+<body ng-app="routerExample">
+
+<app-root></app-root>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+<script src="https://unpkg.com/angular-ui-router@1.0.3/release/angular-ui-router.min.js"></script>
+
+
+<script>
+    'use strict';
+    const app = angular.module('routerExample', ['ui.router']);
+
+    app.config(($stateProvider) => {
+        $stateProvider.state({
+            name: 'home',
+            url: '/',
+            template: '<home></home>',
+        });
+
+        $stateProvider.state({
+            name: 'user',
+            url: '/user/:userId',
+            template: '<user user-id="$ctrl.userId"></user>',
+            controller: function($stateParams) {
+                this.userId = $stateParams.userId;
+            },
+            controllerAs: '$ctrl'
+        });
+
+        $stateProvider.state({
+            name: 'user.profile',
+            url: '/profile',
+            template: 'profile'
+        });
+    });
+
+
+    app.service("userService", function ($http) {
+        this.getUsers = function () {
+            return $http.get("https://learn.javascript.ru/courses/groups/api/participants?key=uczue3");
+        }
+    });
+
+    app.component('appRoot', {
+        template: `
+			<a ui-sref="home" ui-sref-active="myactiveclass">home</a>
+			<!--<a ui-sref="user({userId: 73})" ui-sref-active="myactiveclass">user</a>-->
+			<a ui-sref="user.profile" ui-sref-active="myactiveclass">profile</a>
+			<ui-view></ui-view>`
+    });
+
+    app.component('home', {
+        restrict: 'E',
+        template: "<div>HOME state</div>"
+    });
+
+    app.component('usersView', {
+        restrict: 'E',
+        templateUrl: 'usersView.html',
+        controller: function (userService) {
+            userService.getUsers().then((response) => {
+                this.users = response.data;
+            })
+        }
+    });
+
+    app.component('userCard', {
+        restrict: 'E',
+        bindings: {
+            user: '<'
+        },
+        templateUrl: 'user-card.html',
+        controller: function () {
+            const self = this;
+            this.onClick = () => self.selected = !self.selected;
+        }
+    });
+
+    app.component('avatar', {
+        restrict: 'E',
+        bindings: {
+            img: '<'
+        },
+        templateUrl: 'avatar.html'
+    });
+</script>
+</body>
+</html>
