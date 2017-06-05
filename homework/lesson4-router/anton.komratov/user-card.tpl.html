@@ -1,0 +1,24 @@
+<div ng-if="$ctrl.isVisible()" >
+    <div class="panel panel-info {{$ctrl.getSelected()}}"  ng-click="$ctrl.selectCard()">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{$ctrl.user.name}}</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class=" col-md-9 col-lg-9 ">
+                    <table class="table table-user-information">
+                        <tbody>
+                        <tr><td><avatar image="$ctrl.user.photo"></avatar></td></tr>
+                        <tr><td>Фамилия</td><td>{{$ctrl.user.surname}}</td></tr>
+                        <tr><td>Имя</td><td>{{$ctrl.user.firstName}}</td></tr>
+                        <tr><td>Страна</td><td>{{$ctrl.user.country}}</td></tr>
+                        <!-- <tr><td>Email</td><td><a href="mailto:{{$ctrl.user.email}}">{{$ctrl.user.email}}</a></td></tr> -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+        </div>
+    </div>
+</div>

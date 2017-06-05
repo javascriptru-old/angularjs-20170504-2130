@@ -1,0 +1,48 @@
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-lg-2">
+<!--
+            <div class="panel panel-info">
+                <ul class="list-group">
+                    <li class="list-group-item" ng-class="$ctrl.isDisplayMode($ctrl.MODES.LETTERS)?'active':''" ng-click="$ctrl.setDisplayMode($ctrl.MODES.LETTERS)">
+                        <a href="#">Входящие <span class="badge">{{$ctrl.MailBox.letters.length}}</span></a></li>
+                    <li class="list-group-item list-group-warning" ng-class="$ctrl.isDisplayMode($ctrl.MODES.CONTACTS)?'active':''" ng-click="$ctrl.setDisplayMode($ctrl.MODES.CONTACTS)">
+                        <a href="#">Контакты <span class="badge">{{$ctrl.UserService.users.length}}</span></a></li>
+                    <li class="list-group-item list-group-warning" ng-class="$ctrl.isDisplayMode($ctrl.MODES.SETTINGS)?'active':''" ng-click="$ctrl.setDisplayMode($ctrl.MODES.SETTINGS)"><a href="#">Настройки</a></li>
+                    <li class="list-group-item list-group-warning" ng-class="$ctrl.isDisplayMode($ctrl.MODES.CURRENCIES)?'active':''" ng-click="$ctrl.setDisplayMode($ctrl.MODES.CURRENCIES)"><a href="#">Конвертер валют</a></li>
+                </ul>
+            </div>
+-->
+            <div class="panel panel-info">
+                <ul class="list-group">
+                    <li class="list-group-item" ui-sref="letter-list" ui-sref-active="active">
+                        <a ui-sref="letter-list">Входящие <span class="badge">{{$ctrl.MailBox.letters.length}}</span></a></li>
+                    <li class="list-group-item" ui-sref="user-list" ui-sref-active="active">
+                        <a ui-sref="user-list">Контакты <span class="badge">{{$ctrl.UserService.users.length}}</span></a></li>
+                    <li class="list-group-item" ui-sref="login" ui-sref-active="active">
+                        <a ui-sref="login">Вход</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="col-lg-10">
+            <ui-view></ui-view>
+        </div>
+
+    <!--
+        <div class="col-lg-10" ng-if="$ctrl.isDisplayMode($ctrl.MODES.LETTERS)" >
+            <letter-list></letter-list>
+        </div>
+
+        <div class="col-lg-10" ng-if="$ctrl.isDisplayMode($ctrl.MODES.CONTACTS)">
+            <user-list mode="$ctrl.mode"></user-list>
+        </div>
+     -->
+
+    </div>
+
+</div>
+

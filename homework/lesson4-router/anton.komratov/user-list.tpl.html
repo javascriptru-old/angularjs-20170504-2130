@@ -1,0 +1,10 @@
+<div class="row">
+    <input type="checkbox" ng-model="$ctrl.onlyWithPhoto">Показывать только с фото</input>
+</div>
+<div class="row">
+    <div class="col-md-6" ng-repeat="user in $ctrl.users">
+        <a ui-sref="user({userId: $index})">
+            <user-card ng-if="$ctrl.shouldShowUser(user)" user="user" user-id="$index" photo-needed="$ctrl.onlyWithPhoto"></user-card>
+        </a>
+    </div>
+</div>

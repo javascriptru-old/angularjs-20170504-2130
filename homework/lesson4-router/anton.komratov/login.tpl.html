@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-md-4">
+        <form ng-submit="$ctrl.onLogin()"
+              novalidate="novalidate">
+
+            <div class="form-group" >
+                <label class="control-label">Имя пользователя</label >
+                <input type="text"
+                       class="form-control"
+                       ng-model="$ctrl.login"
+                       width="100px"
+                       required="required" >
+            </div >
+
+            <div class="form-group" >
+                <label class="control-label">Пароль</label >
+                <input type="password"
+                       class="form-control"
+                       ng-model="$ctrl.password"
+                       width="100px"
+                       required="required" >
+            </div >
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Войти</button>
+            </div>
+
+        </form >
+    </div>
+</div>
