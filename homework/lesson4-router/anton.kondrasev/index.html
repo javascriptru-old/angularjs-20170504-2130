@@ -40,7 +40,7 @@
 
         $stateProvider.state({
             name: 'userList',
-            url: '/user-list',
+            url: '/users',
             template: '<user-list></user-list>',
             controllerAs: '$ctrl'
         });
@@ -49,6 +49,16 @@
             name: 'mailList',
             url: '/mail-list',
             template: '<mail-box></mail-box>',
+            controllerAs: '$ctrl'
+        });
+
+        $stateProvider.state({
+            name: 'users',
+            url: '/users/:userId',
+            template: '<div class="warning">User details: {{$ctrl.userId}}</div>',
+            controller: function($stateParams) {
+                this.userId = $stateParams.userId;
+            },
             controllerAs: '$ctrl'
         });
     });
