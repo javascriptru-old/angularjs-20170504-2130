@@ -53,11 +53,31 @@
         });
     });
 
-
+    /////////services
     app.service("userService", function ($http) {
         this.getUsers = function () {
             return $http.get("https://learn.javascript.ru/courses/groups/api/participants?key=uczue3");
         }
+    });
+
+    app.service("mailService", function ($http) {
+        this.getLetters = () => {
+            return $http.get("http://test-api.javascript.ru/v1/anton.kondrasev/letters");
+        };
+
+        this.createLetter = (data) => {
+            return $http.post("http://test-api.javascript.ru/v1/anton.kondrasev/letters", data);
+        };
+
+        this.createMailBox = (title) => {
+            return $http.post('http://test-api.javascript.ru/v1/anton.kondrasev/mailboxes', {
+                title: title
+            });
+        };
+
+        this.deleteLetter = (id) => {
+            return $http.delete('http://test-api.javascript.ru/v1/anton.kondrasev/letters', id);
+        };
     });
 
     app.component('appRoot', {
@@ -106,32 +126,36 @@
             display: '@'
         },
         templateUrl: 'mail-box.html',
-        controller: function ($scope) {
-            this.letters = [
-                {
-                    id: 1,
-                    title: "Letter #1",
-                    content: "text"
-                }, {
-                    id: 2,
-                    title: "Letter #2",
-                    content: "text text"
-                }];
+        controller: function (mailService) {
+//            mailService.createMailBox("default").then((response) => {
+//                console.log(response)
+//            });
+
+            mailService.getLetters().then((response) => {
+                console.log("letters: ",response.data);
+                this.letters = response.data;
+            });
 
             this.deleteLetter = (letter) => {
-                this.letters = this.letters.filter(function (el) {
-                    return el.id !== letter.id
+                mailService.deleteLetter(letter._id).then(() => {
+                    this.letters = this.letters.filter(function (el) {
+                        return el._id !== letter._id
+                    });
                 });
             };
 
             this.addLetter = () => {
-                let randomId = Math.floor(Math.random() * 99 + 1);
-                this.letters.push({
-                    id: randomId,
-                    content: "Random content - " + randomId,
-                    title: "Random title #" + randomId
+                mailService.createLetter({
+                    mailbox: "59353c5855fc9c1d0458843d",
+                    to: "some@mail.ru",
+                    subject: "subject",
+                    title: "title",
+                    body: "content"
+                }).then((response) => {
+                    return mailService.getLetters();
+                }).then((response) => {
+                    this.letters = response.data;
                 });
-                $scope.$apply();
 
                 clearTimeout(this.timer);
                 this.timer = generateTimeout(this.addLetter);
@@ -146,20 +170,7 @@
             letter: '<',
             onDeleteClicked: "&"
         },
-        templateUrl: 'mail-letter.html',
-        controller: function () {
-            this.$onInit = () => {
-                this.timeLived = 0;
-                this.interval = setInterval(() => {
-                    this.timeLived++;
-                }, 1000);
-            };
-
-            this.$onDestroy = () => {
-                clearInterval(this.interval);
-                console.log(this.letter.title, this.timeLived);
-            }
-        }
+        templateUrl: 'mail-letter.html'
     });
 
 
