@@ -17,13 +17,36 @@
 	app.config(($stateProvider) => {
 
 		$stateProvider.state({
+			//reloadOnSearch: false
+			//abstract: true,
+			data: {
+				title: 'Home',
+				acl: ['admin', 'manager']
+				//$state.current.data.title
+			},
+			// resolve: {
+			// 	user: function(UserService) {
+			// 		return UserService.getOne();
+			// 	},
+			// 	item: function(ItemService) {
+			// 		return ItemService.getOne();
+			// 	}
+			// },
 			name: 'home',
 			url: '/',
-			template: '<home></home>',
+			// template: '<home user="$ctrl.user" item="$ctrl.item"></home>',
+			// controller: function(user, item) {
+            //    this.user = user;
+            //    this.item = item;
+			// },
+			// controllerAs: '$ctrl'
 		});
 
 		$stateProvider.state({
 			name: 'user',
+			resolve: {
+				user: () => {}
+			},
 			url: '/user/:userId',
 			template: '<user user-id="$ctrl.userId"></user>',
 			controller: function($stateParams) {
@@ -34,6 +57,11 @@
 
 		$stateProvider.state({
 			name: 'user.profile',
+			resolve: {
+				userProfile: (user) => {
+					return { name: 'Bob' }
+				}
+			},
 			url: '/profile',
 			template: 'profile'
 		});
@@ -66,10 +94,25 @@
 			id: '<userId'
 		},
 		template: 'USER <ui-view></ui-view>',
-		controller: function() {
+		controller: function($scope, $state) {
 			this.$onInit = function() {
         console.log(this.id);
 			}
+
+
+			$state.go('home');
+			$state.go('^');
+			$state.go('^.setting', { userId : 73});
+
+
+			// $scope.$broadcast('myevent1')
+			// $scope.$emmit('myevent2')
+
+			// $scope.$on('myevent2', function() {
+
+			// });
+
+
 		}
 	})
 

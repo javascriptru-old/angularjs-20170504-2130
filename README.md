@@ -31,6 +31,7 @@
 7. $scope.$apply() - зло зло зло
 8. использовать scope/controller.this в сервисе - зло
 9. в контроллере this.Service = Service; - зло
+10. resolve только с индикацией загрузки
 
 
 
