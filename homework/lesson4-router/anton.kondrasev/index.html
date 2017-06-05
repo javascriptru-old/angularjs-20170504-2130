@@ -5,6 +5,9 @@
     <title>User-list</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            padding-top: 60px;
+        }
         .red {
             background-color: #990000;
             color: white;
@@ -36,19 +39,17 @@
         });
 
         $stateProvider.state({
-            name: 'user',
-            url: '/user/:userId',
-            template: '<user user-id="$ctrl.userId"></user>',
-            controller: function($stateParams) {
-                this.userId = $stateParams.userId;
-            },
+            name: 'userList',
+            url: '/user-list',
+            template: '<user-list></user-list>',
             controllerAs: '$ctrl'
         });
 
         $stateProvider.state({
-            name: 'user.profile',
-            url: '/profile',
-            template: 'profile'
+            name: 'mailList',
+            url: '/mail-list',
+            template: '<mail-box></mail-box>',
+            controllerAs: '$ctrl'
         });
     });
 
@@ -60,11 +61,7 @@
     });
 
     app.component('appRoot', {
-        template: `
-			<a ui-sref="home" ui-sref-active="myactiveclass">home</a>
-			<!--<a ui-sref="user({userId: 73})" ui-sref-active="myactiveclass">user</a>-->
-			<a ui-sref="user.profile" ui-sref-active="myactiveclass">profile</a>
-			<ui-view></ui-view>`
+        templateUrl: "app-root.html"
     });
 
     app.component('home', {
@@ -72,9 +69,10 @@
         template: "<div>HOME state</div>"
     });
 
-    app.component('usersView', {
+    /////////users list
+    app.component('userList', {
         restrict: 'E',
-        templateUrl: 'usersView.html',
+        templateUrl: 'user-list.html',
         controller: function (userService) {
             userService.getUsers().then((response) => {
                 this.users = response.data;
@@ -101,6 +99,74 @@
         },
         templateUrl: 'avatar.html'
     });
+
+    //////////mail box
+    app.component('mailBox', {
+        bindings: {
+            display: '@'
+        },
+        templateUrl: 'mail-box.html',
+        controller: function ($scope) {
+            this.letters = [
+                {
+                    id: 1,
+                    title: "Letter #1",
+                    content: "text"
+                }, {
+                    id: 2,
+                    title: "Letter #2",
+                    content: "text text"
+                }];
+
+            this.deleteLetter = (letter) => {
+                this.letters = this.letters.filter(function (el) {
+                    return el.id !== letter.id
+                });
+            };
+
+            this.addLetter = () => {
+                let randomId = Math.floor(Math.random() * 99 + 1);
+                this.letters.push({
+                    id: randomId,
+                    content: "Random content - " + randomId,
+                    title: "Random title #" + randomId
+                });
+                $scope.$apply();
+
+                clearTimeout(this.timer);
+                this.timer = generateTimeout(this.addLetter);
+            };
+
+            this.timer = generateTimeout(this.addLetter);
+        }
+    });
+
+    app.component('mailLetter', {
+        bindings: {
+            letter: '<',
+            onDeleteClicked: "&"
+        },
+        templateUrl: 'mail-letter.html',
+        controller: function () {
+            this.$onInit = () => {
+                this.timeLived = 0;
+                this.interval = setInterval(() => {
+                    this.timeLived++;
+                }, 1000);
+            };
+
+            this.$onDestroy = () => {
+                clearInterval(this.interval);
+                console.log(this.letter.title, this.timeLived);
+            }
+        }
+    });
+
+
+    function generateTimeout(handler) {
+        let randomInterval = Math.floor(Math.random() * (8 - 3)) + 3;
+        return setTimeout(handler, randomInterval * 1000);
+    }
 </script>
 </body>
 </html>

@@ -1,10 +1,12 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-2">
             <label>With picture only: <input type="checkbox" ng-model="$ctrl.search.withPictureOnly"/>
             </label>
         </div>
-        <div class="col-md-6">
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <user-card ng-if="$ctrl.search.withPictureOnly && user.photo || !$ctrl.search.withPictureOnly"
                        user="user" ng-repeat="user in $ctrl.users"></user-card>
         </div>
