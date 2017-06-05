@@ -1,0 +1,21 @@
+<div class="panel panel-info" ng-class='{"backlight":$ctrl.showLight}' ng-click="$ctrl.toggleLight()">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{$ctrl.userCard.surname + ' ' + $ctrl.userCard.firstName}}</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class=" col-md-9 col-lg-9 ">
+                <table class="table table-user-information">
+                    <tbody>
+                    <tr><td>Страна</td><td>{{$ctrl.userCard.country}}</td></tr>
+                    <tr><td>Аватар</td><td><avatar image="$ctrl.userCard.photo"></avatar></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+    </div>
+</div>
+
+<!--ng-class='{"myclass":tog==1}' ng-click='tog=1'-->
