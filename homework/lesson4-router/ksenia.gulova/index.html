@@ -20,8 +20,14 @@
     app.config(($stateProvider) => {
 
         $stateProvider.state({
-            name: 'login',
+            name: 'home',
             url: '/',
+            template: 'Mail Service',
+        });
+
+        $stateProvider.state({
+            name: 'login',
+            url: '/login',
             template: '<login></login>',
         });
 
@@ -48,10 +54,18 @@
     });
     app.component('appRoot', {
         template: `
-			<a ui-sref="login">Login</a>
-			<a ui-sref="users">Users</a>
-			<a ui-sref="usersById({userId: 'Gulova'})">User by id</a>
-			<a ui-sref="mailbox">Mailbox</a>
+            <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" ui-sref="home">Mail Service</a>
+                </div>
+                <ul class="nav navbar-nav">
+                  <li><a ui-sref="login">Login</a></li>
+                  <li><a ui-sref="users">Users</a></li>
+                  <li><a ui-sref="mailbox">Mailbox</a></li>
+                </ul>
+              </div>
+            </nav>
 			<ui-view></ui-view>`
     });
 
@@ -121,13 +135,6 @@
         controller:['UserService', function(UserService) {
             UserService.getList().then(users => this.userList = users),
                 this.withAvatar = false,
-                this.userWithAvatar = function(avatar) {
-                    if(this.withAvatar && !avatar){
-                        return false;
-                    }else{
-                        return true;
-                    }
-                },
                 this.showUser = function(avatar, userId) {
                     if (this.id && userId != this.id) {
                         return false;
