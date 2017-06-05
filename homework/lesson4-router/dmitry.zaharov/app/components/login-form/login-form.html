@@ -1,0 +1,23 @@
+<div layout="row" layout-align="center center">
+    <md-card flex-gt-sm="33" flex="100">
+        <md-card-content>
+            <form name="vm.form" ng-submit="vm.signIn()" autocomplete="off">
+                <md-input-container class="md-block" md-no-float>
+                    <input type="text" name="username" ng-model="vm.username" placeholder="Имя пользователя" required/>
+                    <div ng-messages="vm.form.username.$error" role="alert" multiple="">
+                        <div ng-message="required" class="my-message">Пожалуйста, введите имя пользователя.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" md-no-float>
+                    <input type="password" name="password" ng-model="vm.password" placeholder="Пароль" required />
+                    <div ng-messages="vm.form.password.$error" role="alert" multiple="">
+                        <div ng-message="required" class="my-message">Пожалуйста, введите пароль.</div>
+                    </div>
+                </md-input-container>
+                <div layout="column">
+                    <button type="submit" class="md-button md-raised md-primary">Войти</button>
+                </div>
+            </form>
+        </md-card-content>
+    </md-card>
+</div>

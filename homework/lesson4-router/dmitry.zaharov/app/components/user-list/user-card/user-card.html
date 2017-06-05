@@ -1,0 +1,15 @@
+<md-content class="md-padding" md-ink-ripple>
+    <div ng-if="vm.user">
+        <avatar src="vm.user.picture.large" user-name="vm.user.name"></avatar>
+        <h2>{{vm.user.name}}</h2>
+        <p><b>Email</b>: {{vm.user.email}}</p>
+        <p><b>Phone</b>: {{vm.user.phone}}</p>
+        <p><b>City</b>: {{vm.user.location.city}}</p>
+    </div>
+    <div ng-if="!vm.user && !vm.error">
+        <p>Загружаются данные пользователя</p>
+    </div>
+    <div ng-if="!vm.user && vm.error">
+        <p>При загрузке данных пользователя произошла ошибка. <a ui-sref="home.userList">Вернуться</a> к списку пользователей ?</p>
+    </div>
+</md-content>

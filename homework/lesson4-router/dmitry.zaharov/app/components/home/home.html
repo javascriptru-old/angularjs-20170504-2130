@@ -1,0 +1,51 @@
+<div layout="column" layout-fill>
+    <md-toolbar layout="row" class="md-whiteframe-4dp">
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" ng-click="vm.toggleLeftMenu()" aria-label="Menu">
+                <md-icon md-svg-src="img/ic_menu_white_24px.svg"></md-icon>
+            </md-button>
+            <h2>{{vm.title}}</h2>
+        </div>
+    </md-toolbar>
+    <div flex layout="row" style="overflow: hidden">
+        <md-sidenav md-component-id="left" class="md-sidenav-left md-whiteframe-16dp">
+            <md-content>
+                <md-list>
+                    <md-list-item ui-sref="home.userList">
+                        <p class="md-body-2">User list</p>
+                    </md-list-item>
+                    <md-list-item  ui-sref="home.mailBox">
+                        <p class="md-body-2">Mail box</p>
+                    </md-list-item>
+                    <md-list-item  ui-sref="loginForm">
+                        <p class="md-body-2">Exit</p>
+                    </md-list-item>
+                </md-list>
+            </md-content>
+        </md-sidenav>
+        <md-content flex>
+            <ui-view></ui-view>
+        </md-content>
+    </div>
+</div>
+<!--&lt;!&ndash; Fixed navbar &ndash;&gt;-->
+<!--<nav class="navbar navbar-default navbar-fixed-top">-->
+    <!--<div class="container">-->
+        <!--<div class="navbar-header">-->
+            <!--<a class="navbar-brand" href="javascript:void(0);">dmitry.zaharov</a>-->
+        <!--</div>-->
+        <!--<div id="navbar" class="navbar-collapse collapse">-->
+            <!--<ul class="nav navbar-nav">-->
+                <!--<li ui-sref-active="active"><a ui-sref="home.userList" >User list</a></li>-->
+                <!--<li ui-sref-active="active"><a ui-sref="home.mailBox" >Mail box</a></li>-->
+            <!--</ul>-->
+            <!--<ul class="nav navbar-nav navbar-right">-->
+                <!--<li><a ui-sref="loginForm">Log out</a></li>-->
+            <!--</ul>-->
+        <!--</div>&lt;!&ndash;/.nav-collapse &ndash;&gt;-->
+    <!--</div>-->
+<!--</nav>-->
+
+<!--<div class="container">-->
+    <!--<ui-view></ui-view>-->
+<!--</div> &lt;!&ndash; /container &ndash;&gt;-->
