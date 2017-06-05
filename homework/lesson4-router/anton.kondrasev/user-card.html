@@ -1,6 +1,6 @@
 <div class="panel panel-info {{$ctrl.selected ? 'red' : ''}}" ng-click="$ctrl.onClick()">
     <div class="panel-heading">
-        <h3 class="panel-title">{{$ctrl.user.firstName}} {{$ctrl.user.surname}}</h3> <a ui-sref="users({userId: $ctrl.user.firstName})" ng-click="$event.stopPropagation()">View details</a>
+        <h3 class="panel-title">{{$ctrl.user.firstName}} {{$ctrl.user.surname}}</h3> <a ui-sref="user({userId: $ctrl.user.firstName})" ng-click="$event.stopPropagation()">View details</a>
     </div>
     <div class="panel-body">
         <div class="row">

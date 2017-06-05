@@ -8,6 +8,7 @@
         body {
             padding-top: 60px;
         }
+
         .red {
             background-color: #990000;
             color: white;
@@ -17,6 +18,40 @@
             background-color: #550000;
             color: #fff;
         }
+
+        .wrapper {
+            margin-top: 80px;
+            margin-bottom: 80px;
+        }
+
+        .form-signin {
+            max-width: 380px;
+            padding: 15px 35px 45px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+
+        .form-signin-heading,
+        .checkbox {
+            margin-bottom: 30px;
+        }
+
+        .checkbox {
+            font-weight: normal;
+        }
+
+        input[type="text"] {
+            margin-bottom: -1px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        input[type="password"] {
+            margin-bottom: 20px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
     </style>
 </head>
 <body ng-app="routerExample">
@@ -53,12 +88,19 @@
         });
 
         $stateProvider.state({
-            name: 'users',
+            name: 'user',
             url: '/users/:userId',
             template: '<div class="warning">User details: {{$ctrl.userId}}</div>',
-            controller: function($stateParams) {
+            controller: function ($stateParams) {
                 this.userId = $stateParams.userId;
             },
+            controllerAs: '$ctrl'
+        });
+
+        $stateProvider.state({
+            name: 'login',
+            url: '/login',
+            template: '<login></login>',
             controllerAs: '$ctrl'
         });
     });
@@ -97,6 +139,11 @@
     app.component('home', {
         restrict: 'E',
         template: "<div>HOME state</div>"
+    });
+
+    app.component('login', {
+        restrict: 'E',
+        templateUrl: "login.html"
     });
 
     /////////users list
@@ -142,7 +189,7 @@
 //            });
 
             mailService.getLetters().then((response) => {
-                console.log("letters: ",response.data);
+                console.log("letters: ", response.data);
                 this.letters = response.data;
             });
 
