@@ -1,0 +1,91 @@
+<html ng-app="myApp">
+
+<head>
+	<style>
+		.myactiveclass {
+			color: red;
+		}
+	</style>
+</head>
+
+<body>
+	<app-root></app-root>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+	<script src="https://unpkg.com/angular-ui-router@1.0.3/release/angular-ui-router.min.js"></script>
+
+	<script>
+		/*
+				- resolve
+				- state change
+				- interceptors
+				*/
+
+
+	/*
+
+	  $http      <--->  interceptors  <--->     API(server)
+
+	*/
+
+
+
+		let app = angular.module('myApp', ['ui.router']);
+
+	    // adding interceptor ---------
+        app.config(($httpProvider) => {
+          $httpProvider.interceptors.push('authRejector')
+		});
+
+		app.service('authRejector', function($injector, $q) {
+           this.responseError = (rejection) => {
+			  if(rejection.status === 401) {
+				  $injector.get('$state').go('login');
+			  }
+
+			  return $q.reject(rejection);
+		   }
+		});
+		////-------------------------
+
+		app.config(($stateProvider) => {
+
+			$stateProvider.state({
+				data: {
+					title: 'Home',
+					acl: ['admin', 'manager']
+					//$state.current.data.title
+				},
+				resolve: {
+					login: function (AuthService, ACLSerice) {
+						return AuthService.isLogin();
+					}
+				},
+				name: 'home',
+				url: '/'
+			});
+
+
+		});
+
+		app.run(($rootScope, AuthService, $state, $q) => {
+					$rootScope.$on('$stateChangeStart', (event, toState) => {
+						if (toState !== 'login' && !AuthService.isLogin()) {
+							event.preventDefault();
+							$state.go('login');
+						}
+					});
+
+					$transitions.onEnter({
+							to: 'user.**'
+						}, function ($state$, $transition$) {
+							if (!AuthService.isLogin()) {
+								$state.go('login');
+								return $q.reject();
+							}
+						}
+					});
+	</script>
+</body>
+
+</html>

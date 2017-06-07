@@ -1,0 +1,24 @@
+body{
+    padding-top: 70px;
+    padding-bottom: 30px;
+}
+.trash_mail{
+    float: right;
+    color: black;
+    font-size: 20px;
+    cursor: pointer;
+}
+.card_hover{
+    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+}
+.panel-heading{
+    height: 40px;
+}
+h3.panel-title{
+    float: left;
+}
+i.icon_more{
+    float:right;
+    font-size: 22px;
+    cursor: pointer;
+}

@@ -1,0 +1,122 @@
+<html ng-app="myApp">
+	<head>
+		<style>
+			.myactiveclass {
+				color: red;
+			}
+		</style>
+	</head>
+<body>
+  <app-root></app-root>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+<script src="https://unpkg.com/angular-ui-router@1.0.3/release/angular-ui-router.min.js"></script>
+
+<script>
+	let app = angular.module('myApp', ['ui.router']);
+	app.config(($stateProvider) => {
+
+		$stateProvider.state({
+			//reloadOnSearch: false
+			//abstract: true,
+			data: {
+				title: 'Home',
+				acl: ['admin', 'manager']
+				//$state.current.data.title
+			},
+			// resolve: {
+			// 	user: function(UserService) {
+			// 		return UserService.getOne();
+			// 	},
+			// 	item: function(ItemService) {
+			// 		return ItemService.getOne();
+			// 	}
+			// },
+			name: 'home',
+			url: '/',
+			// template: '<home user="$ctrl.user" item="$ctrl.item"></home>',
+			// controller: function(user, item) {
+            //    this.user = user;
+            //    this.item = item;
+			// },
+			// controllerAs: '$ctrl'
+		});
+
+		$stateProvider.state({
+			name: 'user',
+			resolve: {
+				user: () => {}
+			},
+			url: '/user/:userId',
+			template: '<user user-id="$ctrl.userId"></user>',
+			controller: function($stateParams) {
+         this.userId = $stateParams.userId;
+			},
+			controllerAs: '$ctrl'
+		});
+
+		$stateProvider.state({
+			name: 'user.profile',
+			resolve: {
+				userProfile: (user) => {
+					return { name: 'Bob' }
+				}
+			},
+			url: '/profile',
+			template: 'profile'
+		});
+
+		$stateProvider.state({
+			name: 'user.settings',
+			url: '/settings',
+			template: 'settings'
+		});
+
+	});
+	app.component('appRoot', {
+      template: `
+			<a ui-sref="home" ui-sref-active="myactiveclass">home</a>
+			<a ui-sref="user({userId: 73})" ui-sref-active="myactiveclass">user</a>
+			<a ui-sref="user.profile" ui-sref-active="myactiveclass">profile</a>
+			<a ui-sref="user.settings" ui-sref-active="myactiveclass">settings</a>
+			<ui-view></ui-view>`
+	});
+
+	app.component('home', {
+		template: 'HOME',
+		controller: function() {
+
+		}
+	})
+
+	app.component('user', {
+		bindings: {
+			id: '<userId'
+		},
+		template: 'USER <ui-view></ui-view>',
+		controller: function($scope, $state) {
+			this.$onInit = function() {
+        console.log(this.id);
+			}
+
+
+			$state.go('home');
+			$state.go('^');
+			$state.go('^.setting', { userId : 73});
+
+
+			// $scope.$broadcast('myevent1')
+			// $scope.$emmit('myevent2')
+
+			// $scope.$on('myevent2', function() {
+
+			// });
+
+
+		}
+	})
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<li class="list-group-item">
+    <span class="mail-from">{{$ctrl.letter.name}}</span>
+    <span class="mail-subject">{{$ctrl.letter.title}}</span>
+    <a class="badge" ng-click="$ctrl.removeLetter()"> Удалить </a>
+    <span class="mail-timestamp"> {{$ctrl.getDisplayDate()}} </span>
+</li>
+
+<!--
+<div>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{$ctrl.letter.subject}}</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class=" col-md-9 col-lg-9 ">
+                    <table class="table table-user-information">
+                        <tbody>
+                        <tr><td>Кому</td><td>{{$ctrl.letter.from}}</td></tr>
+                        <tr><td>От кого</td><td>{{$ctrl.letter.to}}</td></tr>
+                        <tr><td></td><td><a ng-click="$ctrl.removeLetter()">Удалить</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+        </div>
+    </div>
+</div>
+-->

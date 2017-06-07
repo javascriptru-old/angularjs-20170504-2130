@@ -1,5 +1,9 @@
 let app = angular.module('myApp', []);
 
+
+//ng-click
+//my-click="domething()"
+
 app.directive('clickDirective', function () {
     return {
         scope: {},

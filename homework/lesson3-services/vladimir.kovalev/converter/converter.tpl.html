@@ -1,0 +1,17 @@
+<h3>Конвертер валют:</h3>
+<div layout="column" layout-padding>
+    <div layout="row">
+        <md-input-container>
+            <label>Первод {{$ctrl.from}}</label>
+            <input name="from" type="number" min="0" ng-model="$ctrl.fromValue" ng-change="$ctrl.convert()">
+        </md-input-container>
+        <currency-box label="валюта" cur-list="$ctrl.curList" cur-select="$ctrl.fromCurChange($locals.currency);"></currency-box>
+    </div>
+    <div layout="row">
+        <md-input-container>
+            <label>в {{$ctrl.to}}</label>
+            <input name="from" type="number" min="0" ng-model="$ctrl.result" ng-change="$ctrl.convert()" ng-readonly="true">
+        </md-input-container>
+        <currency-box label="валюта" cur-list="$ctrl.curList" cur-select="$ctrl.toCurChange($locals.currency);"></currency-box>
+    </div>
+</div>

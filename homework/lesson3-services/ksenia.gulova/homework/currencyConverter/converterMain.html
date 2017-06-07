@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="converter">
+<head>
+    <meta charset="UTF-8">
+    <title>Currency Converter</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<converter></converter>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+<script>
+   'use strict'
+    var app = angular.module('converter', []);
+
+    app.component('converter', {
+    	templateUrl: 'converterTemplate.html',
+    	controller: function(){
+    		this.currencies = ["EUR", "GBP", "USD"],
+			this.rates = {
+			    "EUR": {
+			        "GBP": 0.87,
+			        "USD": 1.12
+			    },
+			    "USD": {
+			        "EUR": 0.89,
+			        "GBP": 0.78
+			    },
+			    "GBP": {
+			        "EUR": 1.15,
+			        "USD": 1.29
+			    }
+			},
+			this.calculate = function(){
+				var rate = this.rates[this.from.currency][this.to.currency];
+				this.result = this.from.value * rate + ' ' + this.to.currency;
+			}
+    	}
+
+    })
+
+</script>

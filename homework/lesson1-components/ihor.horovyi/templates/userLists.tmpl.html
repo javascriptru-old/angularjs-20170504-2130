@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <button ng-click="$ctrl.toggleBlock()">Only with photo</button>
+            <div ng-repeat="user in $ctrl.users">
+                <div ng-if="($ctrl.show || user.photo)" ng-click="$ctrl.selectUser(user)">
+                    <user-card user="user"></user-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

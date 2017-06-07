@@ -1,0 +1,21 @@
+<form style="width:500px; margin-left:50px; margin-top:50px;">
+  <div class="form-group">
+    <label for="value">Amount</label>
+    <input type="number" ng-model="$ctrl.from.value" class="form-control" id="value">
+  </div>
+  <div class="form-group">
+    <label for="from">From</label>
+    <select class="form-control" ng-model="$ctrl.from.currency" id="from" ng-options="currency for currency  in $ctrl.currencies">
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="to">To</label>
+    <select class="form-control" ng-model="$ctrl.to.currency" id="to" ng-options="currency for currency  in $ctrl.currencies | filter: '!' + $ctrl.from.currency">
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary" ng-disabled="!($ctrl.from.currency && $ctrl.from.value && $ctrl.to.currency)" ng-click="$ctrl.calculate()">Convert</button>
+  <div class="form-group" ng-if="$ctrl.result">
+    <label for="result">Result:</label>
+    <input type="text" ng-disabled="true" ng-model="$ctrl.result" class="form-control" id="result">
+  </div>
+</form>

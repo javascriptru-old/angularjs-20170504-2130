@@ -1,0 +1,19 @@
+<div class="panel panel-info {{$ctrl.selected ? 'red' : ''}}" ng-click="$ctrl.onClick()">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{$ctrl.user.firstName}} {{$ctrl.user.surname}}</h3> <a ui-sref="user({userId: $ctrl.user.firstName})" ng-click="$event.stopPropagation()">View details</a>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class=" col-md-9 col-lg-9 ">
+                <avatar img="$ctrl.user.photo"></avatar>
+                <table class="table table-user-information">
+                    <tbody>
+                    <tr><td>Country</td><td>{{$ctrl.user.country}}</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+    </div>
+</div>

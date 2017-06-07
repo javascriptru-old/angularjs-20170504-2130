@@ -1,0 +1,25 @@
+<div class="user-card panel {{($ctrl.selected.id == $ctrl.user.$$hashKey) ? 'panel-danger' : 'panel-info'}}" ng-click="$ctrl.click()">
+    <div class="panel-heading">
+        <h3 class="panel-title" ng-bind="($ctrl.user.name.last + ' ' + $ctrl.user.name.first) | uppercase">Иванов Иван</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class=" col-md-9 col-lg-9 ">
+                <table class="table table-user-information">
+                    <tbody>
+                    <tr><td>Дата рождения</td><td ng-bind="$ctrl.user.dob">1976-10-10</td></tr>
+                    <tr><td>Пол</td><td ng-bind="$ctrl.user.gender">мужской</td></tr>
+                    <tr><td>Адрес</td><td ng-bind="$ctrl.user.location.street">ул. Звенигороская, 47б</td></tr>
+                    <tr><td>Email</td><td><a ng-href="mailto:{{$ctrl.user.email}}" ng-bind="$ctrl.user.email">ivanov@mail.ru</a></td>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-3 col-lg-3">
+                <avatar picture="$ctrl.user.picture.large"></avatar>
+                <a  ui-sref="cabinet.user({userId:$ctrl.user.id})">Просмотреть</a>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+    </div>
+</div>

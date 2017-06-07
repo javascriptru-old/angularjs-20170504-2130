@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework 4</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div style="margin-top:20px;">
+    <app-root></app-root>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+<script src="https://unpkg.com/angular-ui-router@1.0.3/release/angular-ui-router.min.js"></script>
+<script>
+    'use strict'
+    var app = angular.module('myApp', ['ui.router']);
+    app.config(($stateProvider) => {
+
+        $stateProvider.state({
+            name: 'home',
+            url: '/',
+            template: 'Mail Service',
+        });
+
+        $stateProvider.state({
+            name: 'login',
+            url: '/login',
+            template: '<login></login>',
+        });
+
+        $stateProvider.state({
+            name: 'users',
+            url: '/users',
+            template: '<user-cards></user-cards>'
+        });
+        $stateProvider.state({
+            name: 'usersById',
+            url: '/users/:userId',
+            template: 'User Id (Surname): {{$ctrl.userId}}<user-cards user-id="$ctrl.userId"></user-cards>',
+            controller: function($stateParams) {
+                this.userId = $stateParams.userId;
+            },
+            controllerAs: '$ctrl'
+        });
+
+        $stateProvider.state({
+            name: 'mailbox',
+            url: '/mailbox',
+            template: '<mailbox user-id="$ctrl.userId"></mailbox>'
+        });
+    });
+    app.component('appRoot', {
+        template: `
+            <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" ui-sref="home">Mail Service</a>
+                </div>
+                <ul class="nav navbar-nav">
+                  <li><a ui-sref="login">Login</a></li>
+                  <li><a ui-sref="users">Users</a></li>
+                  <li><a ui-sref="mailbox">Mailbox</a></li>
+                </ul>
+              </div>
+            </nav>
+			<ui-view></ui-view>`
+    });
+
+    app.component('login',{
+        templateUrl: 'login/login.html',
+        controller: function(){
+        }
+    });
+
+    app.component('mailbox',{
+        templateUrl: 'mailbox/mailbox.html',
+        controller:['MailboxService', function(MailboxService) {
+            this.limit = 2,
+                this.mailboxId = "592db65e55fc9c1d04588205",
+                MailboxService.getLetters().then(letters => this.letters = letters || []),
+            this.delete = function(letter)
+            {
+                var idx = this.letters.indexOf(letter);
+                if (idx >= 0) {
+                    this.letters.splice(idx, 1);
+                }
+            },
+                this.add = function(){
+                    this.newLetter.mailbox = this.mailboxId;
+                    MailboxService.addLetter(this.newLetter).then(newLetter => this.letters.push(newLetter));
+                }
+        }]
+    });
+
+    app.component('letter',{
+        bindings:{
+            letter : '<content',
+            onDelete: '&',
+            someValue: '@'
+        },
+        templateUrl: 'mailbox/letter.html',
+        controller: function(){
+            this.$onInit = function(){
+                this.startDate = new Date();
+            }
+            this.$onDestroy = function(){
+                var lifetime = (new Date() - this.startDate) / 1000;
+                console.log('The letter lifetime - '+ lifetime + ' seconds');
+            }
+        }
+    });
+
+    app.service('MailboxService', function($http) {
+        return {
+            setMailBox : function(data) {
+                return $http.post('http://test-api.javascript.ru/v1/kseniagulova/mailboxes', data);
+            },
+            getLetters : function(){
+                return $http.get('http://test-api.javascript.ru/v1/kseniagulova/letters').then(response => response.data);
+            },
+            addLetter: function(letter) {
+                return $http.post('http://test-api.javascript.ru/v1/kseniagulova/letters', letter).then(response => response.data);
+            }
+        }
+    });
+
+    app.component('userCards',{
+        bindings: {
+            id: '<userId'
+        },
+        templateUrl: 'users/userCards.html',
+        controller:['UserService', function(UserService) {
+            UserService.getList().then(users => this.userList = users),
+                this.withAvatar = false,
+                this.showUser = function(avatar, userId) {
+                    if (this.id && userId != this.id) {
+                        return false;
+                    } else if(this.withAvatar && !avatar){
+                        return false;
+                    } else{
+                        return true;
+                    }
+                }
+        }]
+
+    });
+    app.service('UserService', function($http) {
+        this.getList = () =>
+            $http.get('https://learn.javascript.ru/courses/groups/api/participants?key=uczue3').then(response => response.data);
+    });
+
+    app.component('userCard',{
+        bindings:{
+            userCard : '<card'
+        },
+        templateUrl: 'users/userCard.html',
+        controller: function(){
+            this.toggleLight = function() {
+                this.showLight = !this.showLight;
+            }
+        }
+    });
+
+    app.component('avatar', {
+        bindings: {
+            photo:'<image'
+        },
+        template : '<img src="{{$ctrl.photo}}" style="width:50px;height:50px;">'
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User-list</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 60px;
+        }
+
+        .red {
+            background-color: #990000;
+            color: white;
+        }
+
+        .red .panel-heading, .red .panel-footer {
+            background-color: #550000;
+            color: #fff;
+        }
+
+        .wrapper {
+            margin-top: 80px;
+            margin-bottom: 80px;
+        }
+
+        .form-signin {
+            max-width: 380px;
+            padding: 15px 35px 45px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+
+        .form-signin-heading,
+        .checkbox {
+            margin-bottom: 30px;
+        }
+
+        .checkbox {
+            font-weight: normal;
+        }
+
+        input[type="text"] {
+            margin-bottom: -1px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        input[type="password"] {
+            margin-bottom: 20px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+    </style>
+</head>
+<body ng-app="routerExample">
+
+<app-root></app-root>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+<script src="https://unpkg.com/angular-ui-router@1.0.3/release/angular-ui-router.min.js"></script>
+
+
+<script>
+    'use strict';
+    const app = angular.module('routerExample', ['ui.router']);
+
+    app.config(($stateProvider) => {
+        $stateProvider.state({
+            name: 'home',
+            url: '/',
+            template: '<home></home>',
+        });
+
+        $stateProvider.state({
+            name: 'userList',
+            url: '/users',
+            template: '<user-list></user-list>',
+            controllerAs: '$ctrl'
+        });
+
+        $stateProvider.state({
+            name: 'mailList',
+            url: '/mail-list',
+            template: '<mail-box></mail-box>',
+            controllerAs: '$ctrl'
+        });
+
+        $stateProvider.state({
+            name: 'user',
+            url: '/users/:userId',
+            template: '<div class="warning">User details: {{$ctrl.userId}}</div>',
+            controller: function ($stateParams) {
+                this.userId = $stateParams.userId;
+            },
+            controllerAs: '$ctrl'
+        });
+
+        $stateProvider.state({
+            name: 'login',
+            url: '/login',
+            template: '<login></login>',
+            controllerAs: '$ctrl'
+        });
+    });
+
+    /////////services
+    app.service("userService", function ($http) {
+        this.getUsers = function () {
+            return $http.get("https://learn.javascript.ru/courses/groups/api/participants?key=uczue3");
+        }
+    });
+
+    app.service("mailService", function ($http) {
+        this.getLetters = () => {
+            return $http.get("http://test-api.javascript.ru/v1/anton.kondrasev/letters");
+        };
+
+        this.createLetter = (data) => {
+            return $http.post("http://test-api.javascript.ru/v1/anton.kondrasev/letters", data);
+        };
+
+        this.createMailBox = (title) => {
+            return $http.post('http://test-api.javascript.ru/v1/anton.kondrasev/mailboxes', {
+                title: title
+            });
+        };
+
+        this.deleteLetter = (id) => {
+            return $http.delete('http://test-api.javascript.ru/v1/anton.kondrasev/letters', id);
+        };
+    });
+
+    app.component('appRoot', {
+        templateUrl: "app-root.html"
+    });
+
+    app.component('home', {
+        restrict: 'E',
+        template: "<div>HOME state</div>"
+    });
+
+    app.component('login', {
+        restrict: 'E',
+        templateUrl: "login.html"
+    });
+
+    /////////users list
+    app.component('userList', {
+        restrict: 'E',
+        templateUrl: 'user-list.html',
+        controller: function (userService) {
+            userService.getUsers().then((response) => {
+                this.users = response.data;
+            })
+        }
+    });
+
+    app.component('userCard', {
+        restrict: 'E',
+        bindings: {
+            user: '<'
+        },
+        templateUrl: 'user-card.html',
+        controller: function () {
+            const self = this;
+            this.onClick = () => self.selected = !self.selected;
+        }
+    });
+
+    app.component('avatar', {
+        restrict: 'E',
+        bindings: {
+            img: '<'
+        },
+        templateUrl: 'avatar.html'
+    });
+
+    //////////mail box
+    app.component('mailBox', {
+        bindings: {
+            display: '@'
+        },
+        templateUrl: 'mail-box.html',
+        controller: function (mailService) {
+//            mailService.createMailBox("default").then((response) => {
+//                console.log(response)
+//            });
+
+            mailService.getLetters().then((response) => {
+                console.log("letters: ", response.data);
+                this.letters = response.data;
+            });
+
+            this.deleteLetter = (letter) => {
+                mailService.deleteLetter(letter._id).then(() => {
+                    this.letters = this.letters.filter(function (el) {
+                        return el._id !== letter._id
+                    });
+                });
+            };
+
+            this.addLetter = () => {
+                mailService.createLetter({
+                    mailbox: "59353c5855fc9c1d0458843d",
+                    to: "some@mail.ru",
+                    subject: "subject",
+                    title: "title",
+                    body: "content"
+                }).then((response) => {
+                    return mailService.getLetters();
+                }).then((response) => {
+                    this.letters = response.data;
+                });
+
+                clearTimeout(this.timer);
+                this.timer = generateTimeout(this.addLetter);
+            };
+
+            this.timer = generateTimeout(this.addLetter);
+        }
+    });
+
+    app.component('mailLetter', {
+        bindings: {
+            letter: '<',
+            onDeleteClicked: "&"
+        },
+        templateUrl: 'mail-letter.html'
+    });
+
+
+    function generateTimeout(handler) {
+        let randomInterval = Math.floor(Math.random() * (8 - 3)) + 3;
+        return setTimeout(handler, randomInterval * 1000);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mailbox">
+<head>
+    <meta charset="UTF-8">
+    <title>Mailbox</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div style="margin-top:20px;">
+    <app-root></app-root>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+<script>
+    'use strict'
+    var app = angular.module('mailbox', []);
+
+    app.component('appRoot', {
+        template: '<div style="width:50%; margin:0 auto;"><label>Limit to:</label>' +
+        '<input ng-model="$ctrl.quantity" type="number"/></div>'+
+        '<mailbox limit="{{$ctrl.quantity}}"></mailbox>',
+        controller: function () {
+            this.quantity = 2;
+        }
+    });
+
+    app.component('mailbox',{
+        bindings:{
+            limit : '@',
+        },
+        templateUrl: 'mailbox.html',
+        controller:['MailboxService', function(MailboxService) {
+            this.mailboxId = "592db65e55fc9c1d04588205"
+            MailboxService.getLetters().then(letters => this.letters = letters || []),
+            this.delete = function(letter)
+            {
+                var idx = this.letters.indexOf(letter);
+                if (idx >= 0) {
+                    this.letters.splice(idx, 1);
+                }
+            },
+            this.add = function(){
+                this.newLetter.mailbox = this.mailboxId;
+                MailboxService.addLetter(this.newLetter).then(newLetter => this.letters.push(newLetter));
+            }
+        }]
+    });
+
+    app.component('letter',{
+        bindings:{
+            letter : '<content',
+            onDelete: '&',
+            someValue: '@'
+        },
+        templateUrl: 'letter.html',
+        controller: function(){
+            //1.6
+            this.$onInit = function(){
+                this.startDate = new Date();
+            }
+            this.$onDestroy = function(){
+                var lifetime = (new Date() - this.startDate) / 1000;
+                console.log('The letter lifetime - '+ lifetime + ' seconds');
+            }
+        }
+    });
+
+    app.service('MailboxService', function($http) {
+        return {
+            setMailBox : function(data) {
+                return $http.post('http://test-api.javascript.ru/v1/kseniagulova/mailboxes', data);
+            },
+            getLetters : function(){
+                return $http.get('http://test-api.javascript.ru/v1/kseniagulova/letters').then(response => response.data);
+            },
+            addLetter: function(letter) {
+                return $http.post('http://test-api.javascript.ru/v1/kseniagulova/letters', letter).then(response => response.data);
+            }
+        }
+    });
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <style>
+  </style>
+</head>
+<body>
+
+  <app-root></app-root>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://unpkg.com/angular-ui-router@1.0.3/release/angular-ui-router.min.js"></script>
+<script>
+  let app = angular.module('myApp', ['ui.router']);
+
+  app.config(($stateProvider, $urlRouterProvider) => {
+
+      $stateProvider.state({
+          name: 'letter-list',
+          url: '/',
+          template: '<letter-list></letter-list>'
+      });
+
+      $stateProvider.state({
+          name: 'user-list',
+          url: '/user',
+          template: '<user-list></user-list>'
+      });
+
+      $stateProvider.state({
+          name: 'user',
+          url: '/user/:userId',
+          template: '<user-card user-id="$ctrl.userId" user="$ctrl.user"></user-card>',
+          controller: function($stateParams, UserService, $log) {
+              this.userId = $stateParams.userId;
+              this.user = UserService.getUserById(this.userId);
+          },
+          controllerAs: '$ctrl'
+      });
+
+      $stateProvider.state({
+          name: 'login',
+          url: '/login',
+          template: '<login></login>'
+      });
+
+      $urlRouterProvider.otherwise("/");
+
+  });
+
+  app.constant('MODES', {
+      CONTACTS: 'Contacts',
+      LETTERS:  'Letters',
+      SETTINGS: 'Settings',
+      CURRENCIES: 'Currencies'
+  });
+
+  app.constant('CONFIG', {
+      LETTERS_NUMBER: 10,
+      MAX_GENERATE_LETTERS: 20
+  });
+
+  app.service('MailService', function($log, $timeout, $http, CONFIG) {
+      this.letters = [];
+
+      this.addLetter = (letter) => {
+          letter.timestamp = new Date();
+          this.letters.push(letter);
+      };
+      this.removeLetter = (letter) => {
+          $log.info('Letter\'s life time is', (new Date() - letter.timestamp) / 1000, 'seconds');
+          this.letters.splice(this.letters.indexOf(letter), 1);
+      };
+
+      this.generateLetter = () => {
+
+          $timeout( () => {
+              if(this.letters.length < CONFIG.MAX_GENERATE_LETTERS) {
+                  $log.info('New fake letter is comming');
+                  this.addLetter(
+                    {
+                      body: 'Empty body',
+                      email: 'test@gmail.com',
+                      name: 'Test service',
+                      title: 'No subject',
+                      picture: 'no picture',
+                      time: 'no time',
+                    }
+                  );
+              }
+            this.generateLetter();
+          }, (Math.random()*5+3)*1000);
+      };
+
+      this.addFakeLetters = () => {
+          this.addLetter(
+              {
+                  body: 'body',
+                  email: 'alert@mail.ru',
+                  name: 'Alert service',
+                  title: 'Notification',
+                  picture: 'no picture',
+                  time: 'no time',
+              }
+          );
+          this.addLetter(
+              {
+                  body: 'Your confirmation required',
+                  email: 'subscribe@mail.ru',
+                  name: 'Subscribe service',
+                  title: 'Confirmation required',
+                  picture: 'no picture',
+                  time: 'no time',
+              }
+          );
+      };
+
+      this.startMailService = () => {
+          // LOCAL fake mails
+          //this.addFakeLetters();
+          //this.generateLetter();
+
+          // REMOTE HTTP service
+          this.getLettersByHTTP(3); // initially GET 3 letters from remote mailbox
+          this.getRandomLetterByHTTP();
+      };
+
+      this.getLettersByHTTP = (num) => {
+          $http.get('http://random.vkhs.ru/letters/' + num).then(
+              (successResponse) => {
+                  successResponse.data.forEach(
+                      (item) => {
+                          this.addLetter(item);
+                      }
+                  );
+              },
+              (errorResponse) => {
+                  $log.info('Error occurred during HTTP GET request', errorResponse);
+              }
+          );
+      };
+
+      this.getRandomLetterByHTTP = () => {
+
+          $timeout( () => {
+              if(this.letters.length < CONFIG.MAX_GENERATE_LETTERS) {
+              $log.info('Receiving new letter by HTTP GET');
+                  this.getLettersByHTTP(1);
+              }
+              this.getRandomLetterByHTTP();
+          }, (Math.random()*5+3)*1000);
+      };
+
+
+      $timeout(() => { this.startMailService() }, 2000);
+  });
+
+
+  app.service('UserService', function($log, $http) {
+
+      this.users = [];
+
+      this.getUserListByHTTP = () => {
+          $http.get('https://learn.javascript.ru/courses/groups/api/participants?key=uczue3')
+              .then((successResponse) => {
+                  successResponse.data.forEach((item) => {
+                    this.users.push(item);
+                  });
+              },
+              (errorResponse) => {
+                  $log.info('Error occurred during HTTP GET request', errorResponse);
+              }
+              );
+          };
+
+      this.getUserList = () => {
+          //this.getTestUserList();
+          this.getUserListByHTTP();
+      };
+
+      this.getUserById = (id) => {
+          if(id >= 0) {
+              return this.users[id];
+          }
+
+          return null;
+      };
+
+      this.getTestUserList = () => {
+
+          var testUsers = [
+              {
+                  firstName: 'First Name',
+                  surname: 'Surname',
+                  photo: '',
+                  country: 'ru',
+                  name: 'Ivan Smirnov',
+                  address: 'pl.Mira, 5',
+                  sex: 'male',
+                  born: '1980-12-01',
+                  email: 'ivan.smirnov@gmail.com',
+                  avatar: 'https://randomuser.me/api/portraits/med/men/83.jpg'
+              },
+              {
+                  firstName: 'First Name',
+                  surname: 'Surname',
+                  photo: '',
+                  country: 'ru',
+                  name:'Piotr Kruglov',
+                  address: 'Karlsplatz, 2',
+                  sex: 'male',
+                  born: '1985-10-20',
+                  email: 'piotr.kruglov@gmail.com'
+              }];
+
+          testUsers.forEach((item) => {
+              this.users.push(item);
+          });
+
+      };
+
+      this.getUserList();
+
+      });
+
+      app.component('appRoot', {
+      templateUrl: './app-root.tpl.html',
+	  controller: function($log, $timeout, MODES, MailService, UserService) {
+          // initializing parameters
+          this.MODES = MODES;
+          this.MailBox = MailService;
+          this.UserService = UserService;
+
+          this.mode = this.MODES.LETTERS;
+          this.setDisplayMode = (mode) => {
+              this.mode = mode;
+              $log.info('Display mode set to', mode);
+          };
+          this.isDisplayMode = (mode) => {
+              return mode === this.mode;
+          };
+	  }
+	});
+
+  app.component('letterList', {
+      bindings: {
+      },
+      templateUrl: './letter-list.tpl.html',
+      controller: function($log, $timeout, CONFIG, MailService) {
+
+          this.letters = MailService.letters;
+
+          this.removeLetter = (letter) => {
+              MailService.removeLetter(letter);
+          };
+
+          this.shouldDisplayLetter = (letterIndex) => {
+
+              if(letterIndex < CONFIG.LETTERS_NUMBER) {
+                  return true;
+              }
+              return false;
+          };
+      }
+  });
+
+  app.component('letter', {
+      bindings: {
+          letter: '<',
+          remove: '&'
+      },
+      templateUrl: './letter.tpl.html',
+      controller: function($log) {
+        this.removeLetter = () => {
+            $log.info('Removing letter with title', this.letter.title);
+            this.remove(this.letter);
+        };
+        this.$onInit = function() {
+            //$log.info('$onInit', this.letter);
+            this.letter.displaytime = new Date();
+        };
+        this.$onDestroy = function() {
+            $log.info('Letter\'s display time is', (new Date() - this.letter.displaytime) / 1000, 'seconds');
+        };
+
+        this.getDisplayDate = () => {
+            var now = new Date();
+            var timestamp = this.letter.timestamp;
+            var strDate = timestamp.toLocaleDateString();
+            if( (now - timestamp) / 1000 < 86400 && now.getDate() === timestamp.getDate()) {
+                strDate = 'сегодня'
+            }
+            return strDate + ', ' + this.letter.timestamp.toLocaleTimeString(); //getDate() + '.' + this.letter.timestamp.getMonth()+1 + '.' + this;
+        };
+      }
+  });
+
+  app.component('userList', {
+        bindings: {
+            mode: '<'
+        },
+        templateUrl: './user-list.tpl.html',
+        controller: function($log, UserService) {
+
+            this.onlyWithPhoto = false;
+            this.users = UserService.users;
+
+            this.shouldShowUser = (user) => {
+                if(this.onlyWithPhoto && !user.photo) {
+                    return false;
+                }
+                return true;
+            };
+
+        }
+    });
+
+  app.component('userCard', {
+      bindings: {
+          user: '<user',
+          userId: '<',
+          photoNeeded: '<photoNeeded'
+      },
+      templateUrl: './user-card.tpl.html',
+      controller: function($log) {
+          this.state = '';
+
+          this.$onInit = () => {
+              //$log.info('User Id', this.userId);
+          },
+
+          this.selectCard = () => {
+              $log.info('onlyWithPhoto=' + this.photoNeeded);
+              $log.info('User Id', this.userId);
+
+              this.state = this.state === 'selected' ? '' : 'selected';
+          };
+          this.getSelected = () => {
+              return this.state;
+          };
+          this.isVisible = () => {
+
+              //$log.info('photoNeeded:', this.photoNeeded, 'Avatar:', this.user.photo);
+              if(this.photoNeeded && !this.user.photo) {
+                  return false;
+              }
+              return true;
+          };
+      }
+  });
+
+  app.component('avatar', {
+      bindings: {
+          image: '<image'
+      },
+      templateUrl: './avatar.tpl.html',
+      controller: function($log) {
+          this.say = () => {
+              $log.info('hey!');
+          };
+      }
+  });
+
+  app.component('login', {
+      bindings: {
+      },
+      templateUrl: './login.tpl.html',
+      controller: function($log) {
+          this.login = 'username';
+          this.password = 'password'
+
+          this.$onInit = () => {
+              //$log.info('Currency converter $onInit()');
+          };
+
+          this.onLogin = () => {
+              $log.info('Login button was pressed', this.login, this.password);
+          };
+      }
+  });
+
+
+
+</script>
+</body>
+</html>

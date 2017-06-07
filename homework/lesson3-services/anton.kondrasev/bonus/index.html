@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bonus</title>
+</head>
+<body>
+
+<div ng-if="0 < 1">should not be rendered</div>
+
+
+<script>
+    var elements = document.querySelectorAll("[ng-if]");
+
+    elements.forEach((element) => {
+        const val = eval(element.getAttribute("ng-if"));
+
+        if (val === "false" || Boolean(val) === false) {
+            element.parentNode.removeChild(element);
+        }
+    });
+</script>
+</body>
+</html>

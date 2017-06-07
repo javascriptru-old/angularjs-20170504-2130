@@ -1,0 +1,42 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                <form>
+                    <div class="form-group">
+                        <label for="fromCurrency">Currency i have</label>
+                        <select id="fromCurrency" class="form-control"
+                                ng-model="vm.fromCurrency"
+                                ng-options="item for item in vm.allCurrencies"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fromCurrencyAmount">Amount</label>
+                        <input type="number" class="form-control" id="fromCurrencyAmount"
+                               ng-model="vm.fromCurrencyAmount">
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form>
+                    <div class="form-group">
+                        <label for="toCurrency">Currency i want</label>
+                        <select id="toCurrency" class="form-control"
+                                ng-model="vm.toCurrency"
+                                ng-options="item for item in vm.topCurrencies"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="toCurrencyAmount">Amount</label>
+                        <input type="number" class="form-control" id="toCurrencyAmount"
+                               ng-model="vm.toCurrencyAmount">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-default" type="button"
+                        ng-click="vm.makeConvert()">Convert</button>
+            </div>
+        </div>
+    </div>
+</div>

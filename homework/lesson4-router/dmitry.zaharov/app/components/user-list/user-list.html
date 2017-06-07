@@ -1,0 +1,25 @@
+<div layout="row">
+    <div flex>
+        <md-toolbar layout="row" class="md-hue-3">
+            <div class="md-toolbar-tools">
+                <md-checkbox ng-model="vm.onlyPhoto">
+                    Показывать только с фото
+                </md-checkbox>
+            </div>
+        </md-toolbar>
+        <md-list>
+            <md-list-item ng-if="!vm.onlyPhoto || (vm.onlyPhoto && user.picture.thumbnail)"
+                          ng-repeat="user in vm.data"
+                          ui-sref="home.user({id: user.id})">
+                <avatar src="user.picture.thumbnail" title="{{user.name}}"></avatar>
+                <div class="md-list-item-text" layout="column">
+                    <p>{{user.name}}</p>
+                </div>
+            </md-list-item>
+        </md-list>
+    </div>
+    <!--<md-divider></md-divider>-->
+    <!--<div flex="50">-->
+        <!--<user-card user="vm.selectedUser"></user-card>-->
+    <!--</div>-->
+</div>

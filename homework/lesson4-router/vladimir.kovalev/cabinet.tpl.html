@@ -1,0 +1,36 @@
+<div layout="column">
+    <md-toolbar md-scroll-shrink >
+        <div class="md-toolbar-tools">
+            <md-button
+                    class="md-raised md-primary"
+                    aria-label="Назад"
+                    ui-sref="home"
+            >
+                Назад
+            </md-button>
+            <md-button
+                    class="md-raised md-primary"
+                    aria-label="Пользователи"
+                    ui-sref="cabinet.users" ui-sref-active="md-warn"
+            >
+                Пользователи
+            </md-button>
+            <md-button
+                    class="md-raised md-primary"
+                    aria-label="Письма"
+                    ui-sref="cabinet.mails" ui-sref-active="md-warn"
+            >
+                Письма
+            </md-button>
+        </div>
+    </md-toolbar>
+    <ui-view>
+       <div class="padded" md-whiteframe="1"   flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center">
+            <md-button class="md-primary" aria-label="Пользователи" ui-sref="cabinet.users">Пользователи</md-button>
+        </div>
+
+        <div class="padded" md-whiteframe="2"   flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center">
+            <md-button class="md-primary" aria-label="Письма" ui-sref="cabinet.mails">Письма</md-button>
+        </div>
+    </ui-view>
+</div>

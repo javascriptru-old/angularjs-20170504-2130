@@ -1,0 +1,47 @@
+.selected {
+    background-color: lightpink;
+}
+
+.mail-from {
+    font-size: 15px;
+}
+
+.mail-subject {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.mail-timestamp {
+    float: right;
+    padding-right: 10px;
+}
+
+.list-group-item.active>a, .list-group-item.active:focus>a, .list-group-item.active:hover>a {
+    color: white;
+    text-decoration-line: none;
+}
+
+.list-group-item.active>a>.badge {
+    color: #337ab7;
+    background-color: white;
+}
+
+.list-group-item>a>.badge {
+    background-color: #337ab7;
+}
+
+body {
+    padding-top: 50px;
+}
+.main-content {
+    padding: 40px 15px;
+}
+
+.convert-label {
+    color: #337ab7;
+}
+.convert-result {
+    font-size: 18px;
+    font-weight: bold;
+    color: #337ab7;
+}
