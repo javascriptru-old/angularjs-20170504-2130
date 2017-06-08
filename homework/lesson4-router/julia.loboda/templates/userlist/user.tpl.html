@@ -1,0 +1,22 @@
+<div class="panel-header">
+    <h3> {{$ctrl.user.firstName}} {{$ctrl.user.surname}}</h3>
+</div>
+<div class="panel-body">
+    <div class="row">
+        <div class=" col-md-9 col-lg-9 ">
+            <table class="table table-user-information" width="100%">
+                <tbody>
+                <tr ng-if="$ctrl.user.photo">
+                    <td colspan="2">
+                        <avatar photo="$ctrl.user.photo"></avatar>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Country:</td>
+                    <td>{{$ctrl.country}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
