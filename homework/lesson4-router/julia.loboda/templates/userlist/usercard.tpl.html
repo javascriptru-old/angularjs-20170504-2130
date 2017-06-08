@@ -1,0 +1,8 @@
+<ul class="list-group">
+    <li class="list-group-item" ng-repeat="user in $ctrl.users" ng-click="$ctrl.getSelected($index)"
+        ng-class="{ active:$index ==  $ctrl.selected }"
+        ui-sref="user({userId: $index})">
+        <span class="name">{{ user.firstName }}  {{ user.surname}}</span>
+        <span class="badge">View details</span>
+    </li>
+</ul>
