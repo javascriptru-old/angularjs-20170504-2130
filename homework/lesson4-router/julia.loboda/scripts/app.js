@@ -34,18 +34,12 @@ app.config(($stateProvider) => {
         controller: function($stateParams, UserService) {
 
 
-            var self = this;
-
-            UserService.getUsersByHttp().then(function(myReponseData) {
-                self.users = myReponseData;
+            UserService.getUsersByHttp().then((myReponseData) => {
+                this.users = myReponseData;
+                this.userId = $stateParams.userId;
+                this.user = UserService.getUserById(this.userId);
             });
-
-            this.userId = $stateParams.userId;
-            this.user = UserService.getUserById(this.userId);
-
             console.log(this.user);
-
-
         },
         controllerAs: '$ctrl'
     });
@@ -288,6 +282,7 @@ app.service('UserService', function ($http) {
     var self = this;
 
     this.users = [];
+    this._dataLoadedPromise;
 
     this.getUsersByHttp = function () {
         var myResponseData = $http.get('https://learn.javascript.ru/courses/groups/api/participants?key=uczue3').then(function (response) {
@@ -304,6 +299,7 @@ app.service('UserService', function ($http) {
     }
 
     this.getUserById = function(id){
+
         return this.users[id];
     }
 

@@ -18,7 +18,14 @@
 - общее задание
 - индивидуальный
 
+[12.06]
 
+- [name] [github] [github-page]
+
+
+[15.06]
+
+- [name] [github] [github-page]
 
 
 ## Заповеди
