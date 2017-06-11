@@ -1,0 +1,135 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
+</head>
+
+<body ng-app="mailbox">
+
+    <script>
+        let app = angular.module("mailbox", []);
+
+        app.component("mailMain", {
+            templateUrl: "mailListTemplate.html",
+            controller: function ($interval) {
+
+                $interval(
+                    () => {
+                        this.mails.splice( 0 , 0 ,  
+                            {
+                                to:"user@gmail.com",
+                                from:"anonym",
+                                title:" Now is : "+new Date(),
+                                created: new Date()
+                            }
+                        );
+                    }
+                    , 3000
+                ),
+
+                this.mails = [{
+                        to: "zabrodko@gmail.com",
+                        from: "gabr@protonmail.com",
+                        title: "hello man 1!",
+                        created: new Date()
+                    },
+                    {
+                        to: "iprokopin@gmail.com",
+                        from: "mabr@protonmail.com",
+                        title: "hello man 2!",
+                        created: new Date()
+                    },
+                    {
+                        to: "ibykin@gmail.com",
+                        from: "habr@protonmail.com",
+                        title: "hello man 3!",
+                        created: new Date()
+                    },
+                    {
+                        to: "marko@gmail.com",
+                        from: "bobr@protonmail.com",
+                        title: "hello man 4!",
+                        created: new Date()
+                    },
+                    {
+                        to: "boboka@gmail.com",
+                        from: "tobr@protonmail.com",
+                        title: "hello man 5!",
+                        created: new Date()
+                    },
+                    {
+                        to: "boboka@gmail.com",
+                        from: "tobr@protonmail.com",
+                        title: "hello man 6!",
+                        created: new Date()
+                    },
+                    {
+                        to: "boboka@gmail.com",
+                        from: "tobr@protonmail.com",
+                        title: "hello man 7!",
+                        created: new Date()
+                    },
+                    {
+                        to: "loboka@gmail.com",
+                        from: "pobr@protonmail.com",
+                        title: "hello man 8!",
+                        created: new Date()
+                    },
+                    {
+                        to: "yoboka@gmail.com",
+                        from: "sobr@protonmail.com",
+                        title: "hello man 9!",
+                        created: new Date()
+                    },
+                    {
+                        to: "soboka@gmail.com",
+                        from: "cobr@protonmail.com",
+                        title: "hello man 10 !",
+                        created: new Date()
+                    },
+                    {
+                        to: "toboka@gmail.com",
+                        from: "zobr@protonmail.com",
+                        title: "hello man 11 !",
+                        created: new Date()
+                    },
+                    {
+                        to: "koboka@gmail.com",
+                        from: "vobr@protonmail.com",
+                        title: "hello man 12!",
+                        created: new Date()
+                    }
+                ];
+                this.mailsQuantity = 1;
+                this.getMails = () => {
+                    tmp = this.mails.slice(0, this.mailsQuantity)
+                    return tmp;
+                };
+                this.removeMail = (mail) => {
+
+                    var index = this.mails.indexOf( mail );
+                    console.log( "Life time of the mail with index " + index + " = " + this.getLifeTime(mail) );
+                    this.mails.splice( index , 1);
+                    console.log( this.mails.length );
+                
+                };
+                this.getLifeTime = (mail) => {
+                    return new Date() - mail.created;
+                }
+            }
+        }) //component mailbox
+
+        app.component("mailItem", {
+            templateUrl: "mailItemTemplate.html",
+            bindings: {
+                mail:   '<item',
+                remove: '&'
+            }
+        }) //mail letter end
+
+    </script>
+
+    <mail-main></mail-main>
+</body>
+
+</html>
