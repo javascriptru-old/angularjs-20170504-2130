@@ -23,9 +23,18 @@
 - [name] [github] [github-page]
 
 
-[15.06]
+???[15.06]- [name] [github] [github-page]
+
+
+[19.06]
 
 - [name] [github] [github-page]
+
+
+## Questions
+1. AngularJs производительность
+2. AngularJS миграция на Angular
+3.
 
 
 ## Заповеди
