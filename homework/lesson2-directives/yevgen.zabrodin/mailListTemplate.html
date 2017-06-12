@@ -1,0 +1,10 @@
+<section>
+    <header>
+        <h1>Mails</h1>
+    </header>
+    
+    <input type="number" ng-model="$ctrl.mailsQuantity" ng-init="$ctrl.mailsQuantity"/>
+
+    <mail-item   ng-repeat="mail in $ctrl.getMails()" item="mail" remove="$ctrl.removeMail(mail)"></mail-item>
+
+</section>
