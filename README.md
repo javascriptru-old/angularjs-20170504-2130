@@ -34,7 +34,8 @@
 ## Questions
 1. AngularJs производительность
 2. AngularJS миграция на Angular
-3.
+3. Не заработали данные методы авторазицации: [тык](https://github.com/javascriptru/angularjs-20170504-2130/blob/master/classwork/lesson5-auth/index.html#L71-L87)  
+Хотелось бы иметь наглядный рабочий вариант, сейчас этот код в уроке быстро не проверить.
 
 
 ## Заповеди
