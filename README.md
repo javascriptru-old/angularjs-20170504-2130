@@ -42,6 +42,7 @@
 8. Angular Forms
 9. Функциональные(e2e) тесты с использованием protractor
 10. transclude
+11. uglify plugin + ECMAScript 6 - плагин не умеет читать новый стандарт
 
 
 ## Что-то никак не получится
