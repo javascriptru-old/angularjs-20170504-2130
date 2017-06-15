@@ -48,6 +48,7 @@
 ( Заполняем в формате: [названием темы] [описание проблемы] [я старался(ссылка на github)] )
 
 1. методы авторазицации на событиях (https://github.com/javascriptru/angularjs-20170504-2130/blob/master/classwork/lesson5-auth/index.html#L71-L87)
+2. [Karma + webpack] [ошибки при запуске karma start] [я старался(https://github.com/dedpnd/angularjs-karma-webpack)]
 
 ## Заповеди
 1. jQuery - это зло (на крайний случай angular.element === jqLite)
