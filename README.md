@@ -32,19 +32,22 @@
 
 
 ## Questions
-1. AngularJs производительность
-2. AngularJS миграция на Angular
-3. Не заработали данные методы авторазицации: [тык](https://github.com/javascriptru/angularjs-20170504-2130/blob/master/classwork/lesson5-auth/index.html#L71-L87)  
-Хотелось бы иметь наглядный рабочий вариант, сейчас этот код в уроке быстро не проверить.  
-4. angular.bootstrap - что это ? пример.  
-5. Angular и IE < 11, работает ли он вообще на стрых браузерах? Что еже надо знать о IE и Angular?  
-6. $resource и Restangular - что это ? пример.  
-7. Это из описания курса: Ресурсы данных. Использование Firebase. ???  
-8. [Описание курса](http://learn.javascript.ru/courses/angular1) пункт 4. можно поподробнее по пунктам? 
-9. Это из описание курса. Функциональные(e2e) тесты с использованием protractor. ???  
-10. Это из описание курса. Вложенные директивы с transclude. ???
-11. Это из описание курса. Серверный рендеринг, поисковики. ???
+1. AngularJs производительность   ✓
+2. AngularJS миграция на Angular  ✓
+3. Серверный рендеринг, поисковики. ✓
+4. angular.bootstrap
+5. AngularJs и IE < 11, браузерная поддержка
+6. $resource и Restangular
+7. Firebase
+8. Angular Forms
+9. Функциональные(e2e) тесты с использованием protractor
+10. transclude
 
+
+## Что-то никак не получится
+( Заполняем в формате: [названием темы] [описание проблемы] [я старался(ссылка на github)] )
+
+1. методы авторазицации на событиях (https://github.com/javascriptru/angularjs-20170504-2130/blob/master/classwork/lesson5-auth/index.html#L71-L87)
 
 ## Заповеди
 1. jQuery - это зло (на крайний случай angular.element === jqLite)
