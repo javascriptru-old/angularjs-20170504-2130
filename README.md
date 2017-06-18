@@ -29,8 +29,7 @@
 [19.06]
 
 - [name] [github] [github-page]
-- Anton Kondrasev https://github.com/akondrasev/angular-course-project
-
+- Anton Kondrasev     https://github.com/akondrasev/akondrasev.github.io    https://akondrasev.github.io/#!/
 
 ## Questions
 1. AngularJs производительность   ✓
