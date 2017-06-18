@@ -29,6 +29,7 @@
 [19.06]
 
 - [name] [github] [github-page]
+- Anton Kondrasev https://github.com/akondrasev/angular-course-project
 
 
 ## Questions
