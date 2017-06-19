@@ -43,13 +43,15 @@
 9. Функциональные(e2e) тесты с использованием protractor
 10. transclude
 11. uglify plugin + ECMAScript 6 - плагин не умеет читать новый стандарт
-
+12. AngularJS + ES6 import
 
 ## Что-то никак не получится
 ( Заполняем в формате: [названием темы] [описание проблемы] [я старался(ссылка на github)] )
 
 1. методы авторазицации на событиях (https://github.com/javascriptru/angularjs-20170504-2130/blob/master/classwork/lesson5-auth/index.html#L71-L87)
 2. [Karma + webpack] [ошибки при запуске karma start] [я старался( https://github.com/dedpnd/angularjs-karma-webpack )]
+3. Разбиение приложения на отдельные файлы (по-компонентно) вызывает массу ошибок типа $Injector:XXX (nomod, modulerr, unpr)
+   не понятно как прописывать зависимости
 
 ## Заповеди
 1. jQuery - это зло (на крайний случай angular.element === jqLite)
