@@ -28,7 +28,7 @@
 
 [19.06]
 
-- [name] [github] [github-page]
+- [name] [github] [github-page]  
 Балюк Дмитрий https://github.com/dedpnd/dedpnd.github.io https://dedpnd.github.io/public/  
 
 
