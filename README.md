@@ -28,8 +28,9 @@
 
 [19.06]
 
-- [name] [github] [github-page]
+- [name] [github] [github-page]  
 - Anton Kondrasev     https://github.com/akondrasev/akondrasev.github.io    https://akondrasev.github.io/#!/
+- Балюк Дмитрий https://github.com/dedpnd/dedpnd.github.io https://dedpnd.github.io/public/  
 
 ## Questions
 1. AngularJs производительность   ✓
