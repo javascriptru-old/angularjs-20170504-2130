@@ -36,7 +36,7 @@
 2. AngularJS миграция на Angular  ✓
 3. Серверный рендеринг, поисковики. ✓
 4. angular.bootstrap
-5. AngularJs и IE < 11, браузерная поддержка
+5. AngularJs и IE < 11, браузерная поддержка - https://docs.angularjs.org/guide/ie
 6. $resource и Restangular
 7. Firebase
 8. Angular Forms
