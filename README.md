@@ -28,24 +28,29 @@
 
 [19.06]
 
-- [name] [github] [github-page]  
+- [name] [github] [github-page]
 - Anton Kondrasev     https://github.com/akondrasev/akondrasev.github.io    https://akondrasev.github.io/#!/
-- Балюк Дмитрий https://github.com/dedpnd/dedpnd.github.io https://dedpnd.github.io/public/  
+- Балюк Дмитрий https://github.com/dedpnd/dedpnd.github.io https://dedpnd.github.io/public/
+
+
+[После]
+- [name] [github] [github-page]
+
+
 
 ## Questions
 1. AngularJs производительность   ✓
-2. AngularJS миграция на Angular  ✓
+2. AngularJS миграция на Angular   ✓
 3. Серверный рендеринг, поисковики. ✓
-4. angular.bootstrap
-5. AngularJs и IE < 11, браузерная поддержка - https://docs.angularjs.org/guide/ie
-6. $resource и Restangular
-7. Firebase
-8. Angular Forms
-9. Функциональные(e2e) тесты с использованием protractor
-10. transclude
-11. uglify plugin + ECMAScript 6 - плагин не умеет читать новый стандарт
-12. localization
-13. AngularJS + ES6 import
+4. angular.bootstrap ✓
+5. AngularJs и IE < 11, браузерная поддержка - https://docs.angularjs.org/guide/ie  ✓
+6. $resource и Restangular  ($http)  ✓
+7. Firebase ✓
+8. Angular Forms ✓
+9. Функциональные(e2e) тесты с использованием protractor ✓
+10. transclude  ✓
+11. AngularJS + ES6 import ✓
+12. localization ✓
 
 ## Что-то никак не получится
 ( Заполняем в формате: [названием темы] [описание проблемы] [я старался(ссылка на github)] )
